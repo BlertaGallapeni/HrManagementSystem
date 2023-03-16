@@ -1,0 +1,17 @@
+﻿@model List<EmployeeVM>
+
+
+<table class="table table-bordered" style="background-color:white; color:black" width="90%">
+   <tbody>
+        @foreach (var obj in Model)
+        {
+            <tr>
+                <td class="fw-bolder pl-4" style="font-size:20px"><img src="@obj.ApplicationUserVM.ProfilePicture.Path" class="elevation-2" style="border-radius:50%; width:50px" alt="User Image" /> &nbsp; @obj.ApplicationUserVM.FullName</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

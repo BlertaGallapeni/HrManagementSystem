@@ -1,0 +1,816 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddClient" xml:space="preserve">
+    <value>Add Client</value>
+  </data>
+  <data name="AddDepartment" xml:space="preserve">
+    <value>Add Department</value>
+  </data>
+  <data name="AddDesignation" xml:space="preserve">
+    <value>Add Designation</value>
+  </data>
+  <data name="AddEmployee" xml:space="preserve">
+    <value>Add Employee</value>
+  </data>
+  <data name="AddProject" xml:space="preserve">
+    <value>Add Project</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AddTask" xml:space="preserve">
+    <value>Add Task</value>
+  </data>
+  <data name="AdminDashboard" xml:space="preserve">
+    <value>Admin Dashboard</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="AllProjects" xml:space="preserve">
+    <value>All Projects</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisClient" xml:space="preserve">
+    <value>Are you sure you want to delete this client?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisDepartment" xml:space="preserve">
+    <value>Are you sure you want to delete this department?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisDesignation" xml:space="preserve">
+    <value>Are you sure you want to delete this designation?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisEmployee" xml:space="preserve">
+    <value>Are you sure you want to delete this employee?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisProject" xml:space="preserve">
+    <value>Are you sure you want to delete this project?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisTask" xml:space="preserve">
+    <value>Are you sure you want to delete this task?</value>
+  </data>
+  <data name="AssignedStaff" xml:space="preserve">
+    <value>Assigned Staff</value>
+  </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>Assigned to</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+  <data name="browseLabel" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="cancelLabel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="ClientID" xml:space="preserve">
+    <value>Client ID</value>
+  </data>
+  <data name="Clients" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="ContactPerson" xml:space="preserve">
+    <value>Contact Person</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Deadline" xml:space="preserve">
+    <value>Deadline</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteClient" xml:space="preserve">
+    <value>Delete Client</value>
+  </data>
+  <data name="DeleteDepartment" xml:space="preserve">
+    <value>Delete Department</value>
+  </data>
+  <data name="DeleteDesignation" xml:space="preserve">
+    <value>Delete Designation</value>
+  </data>
+  <data name="DeleteEmployee" xml:space="preserve">
+    <value>Delete Employee</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>Departments</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Designation" xml:space="preserve">
+    <value>Designation</value>
+  </data>
+  <data name="Designations" xml:space="preserve">
+    <value>Designations</value>
+  </data>
+  <data name="dragTitle" xml:space="preserve">
+    <value>Move / Rearrange</value>
+  </data>
+  <data name="dropZoneClickTitle" xml:space="preserve">
+    <value>&lt;br&gt;(or click to select {files})</value>
+  </data>
+  <data name="dropZoneTitle" xml:space="preserve">
+    <value>Drag &amp; drop files here...</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditClient" xml:space="preserve">
+    <value>Edit Client</value>
+  </data>
+  <data name="EditDepartment" xml:space="preserve">
+    <value>Edit Department</value>
+  </data>
+  <data name="EditDesignation" xml:space="preserve">
+    <value>Edit Designation</value>
+  </data>
+  <data name="EditEmployee" xml:space="preserve">
+    <value>Edit Employee</value>
+  </data>
+  <data name="EditProject" xml:space="preserve">
+    <value>Edit Project</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Employee</value>
+  </data>
+  <data name="EmployeeDashboard" xml:space="preserve">
+    <value>Employee Dashboard</value>
+  </data>
+  <data name="EmployeeID" xml:space="preserve">
+    <value>Employee ID</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="EnterAddress" xml:space="preserve">
+    <value>Enter address</value>
+  </data>
+  <data name="EnterAllowedExtensions" xml:space="preserve">
+    <value>Enter allowed extension</value>
+  </data>
+  <data name="EnterBirthday" xml:space="preserve">
+    <value>Enter birthday</value>
+  </data>
+  <data name="EnterCharacterName" xml:space="preserve">
+    <value>Enter character name</value>
+  </data>
+  <data name="EnterConfirmPassword" xml:space="preserve">
+    <value>Enter confirm password</value>
+  </data>
+  <data name="EnterDescription" xml:space="preserve">
+    <value>Enter description</value>
+  </data>
+  <data name="EnterDuration" xml:space="preserve">
+    <value>Enter duration</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="EnterEmailFrom" xml:space="preserve">
+    <value>Enter email from</value>
+  </data>
+  <data name="EnterEmailTo" xml:space="preserve">
+    <value>Enter email to</value>
+  </data>
+  <data name="EnterFullName" xml:space="preserve">
+    <value>Enter full name</value>
+  </data>
+  <data name="EnterLatitude" xml:space="preserve">
+    <value>Enter latitude</value>
+  </data>
+  <data name="EnterLongitude" xml:space="preserve">
+    <value>Enter longitude</value>
+  </data>
+  <data name="EnterMaxUploadSize" xml:space="preserve">
+    <value>Enter the maximum size</value>
+  </data>
+  <data name="EnterMessage" xml:space="preserve">
+    <value>Enter message</value>
+  </data>
+  <data name="EnterMinimumAge" xml:space="preserve">
+    <value>Enter minimum age</value>
+  </data>
+  <data name="EnterName" xml:space="preserve">
+    <value>Enter name</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Enter new password</value>
+  </data>
+  <data name="EnterNoColumn" xml:space="preserve">
+    <value>Enter number of seat's columns</value>
+  </data>
+  <data name="EnterNoRow" xml:space="preserve">
+    <value>Enter number of seat's rows</value>
+  </data>
+  <data name="EnterOldPassword" xml:space="preserve">
+    <value>Enter old password</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="EnterPhoneNumber" xml:space="preserve">
+    <value>Enter phone number</value>
+  </data>
+  <data name="EnterPort" xml:space="preserve">
+    <value>Enter port</value>
+  </data>
+  <data name="EnterPrice" xml:space="preserve">
+    <value>Enter price</value>
+  </data>
+  <data name="EnterReleaseDate" xml:space="preserve">
+    <value>Enter release date</value>
+  </data>
+  <data name="EnterSmtp" xml:space="preserve">
+    <value>Enter Smtp</value>
+  </data>
+  <data name="EnterSubject" xml:space="preserve">
+    <value>Enter subject</value>
+  </data>
+  <data name="EnterSurname" xml:space="preserve">
+    <value>Enter surname</value>
+  </data>
+  <data name="EnterTrailerLink" xml:space="preserve">
+    <value>Enter trailer link</value>
+  </data>
+  <data name="EnterVATNumber" xml:space="preserve">
+    <value>Enter the VAT number</value>
+  </data>
+  <data name="EnterYourEmail" xml:space="preserve">
+    <value>Enter your email</value>
+  </data>
+  <data name="EnterYourName" xml:space="preserve">
+    <value>Enter your name</value>
+  </data>
+  <data name="EnterYourPassword" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="EnterYourSurname" xml:space="preserve">
+    <value>Enter your surname</value>
+  </data>
+  <data name="Fborderless" xml:space="preserve">
+    <value>Toggle borderless mode</value>
+  </data>
+  <data name="Fclose" xml:space="preserve">
+    <value>Close detailed preview</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="Ffullscreen" xml:space="preserve">
+    <value>Toggle full screen</value>
+  </data>
+  <data name="FieldRequired" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="filePlural" xml:space="preserve">
+    <value>files</value>
+  </data>
+  <data name="fileSingle" xml:space="preserve">
+    <value>file</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="IForgotMyPass" xml:space="preserve">
+    <value>I forgot my password</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="JoinDate" xml:space="preserve">
+    <value>Join Date</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Lead" xml:space="preserve">
+    <value>Lead</value>
+  </data>
+  <data name="Leader" xml:space="preserve">
+    <value>Leader</value>
+  </data>
+  <data name="Leads" xml:space="preserve">
+    <value>Leads</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="ManageAccount" xml:space="preserve">
+    <value>Manage Account</value>
+  </data>
+  <data name="ManageRole" xml:space="preserve">
+    <value>Manage Role</value>
+  </data>
+  <data name="MinLength3" xml:space="preserve">
+    <value>This field should contain at least three characters.</value>
+  </data>
+  <data name="MinLength8" xml:space="preserve">
+    <value>This field should contain at least eight characters.</value>
+  </data>
+  <data name="msgAjaxError" xml:space="preserve">
+    <value>Something went wrong with the {operation} operation. Please try again later!</value>
+  </data>
+  <data name="msgAjaxProgressError" xml:space="preserve">
+    <value>{operation} failed</value>
+  </data>
+  <data name="msgCalculatingTime" xml:space="preserve">
+    <value>calculating time remaining</value>
+  </data>
+  <data name="msgCancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="msgDeleteError" xml:space="preserve">
+    <value>Delete Error</value>
+  </data>
+  <data name="msgDuplicateFile" xml:space="preserve">
+    <value>File "{name}" of same size "{size} KB" has already been selected earlier. Skipping duplicate selection.</value>
+  </data>
+  <data name="msgFileNotFound" xml:space="preserve">
+    <value>File "{name}" not found!</value>
+  </data>
+  <data name="msgFileNotReadable" xml:space="preserve">
+    <value>File "{name}" is not readable.</value>
+  </data>
+  <data name="msgFilePreviewAborted" xml:space="preserve">
+    <value>File preview aborted for "{name}</value>
+  </data>
+  <data name="msgFilePreviewError" xml:space="preserve">
+    <value>An error occurred while reading the file "{name}".</value>
+  </data>
+  <data name="msgFileRequired" xml:space="preserve">
+    <value>You must select a file to upload.</value>
+  </data>
+  <data name="msgFileSecured" xml:space="preserve">
+    <value>Security restrictions prevent reading the file "{name}".</value>
+  </data>
+  <data name="msgFilesTooLess" xml:space="preserve">
+    <value>You must select at least &lt;b&gt;{n}&lt;/b&gt; {files} to upload.</value>
+  </data>
+  <data name="msgFilesTooMany" xml:space="preserve">
+    <value>Number of files selected for upload &lt;b&gt;({n})&lt;/b&gt; exceeds maximum allowed limit of &lt;b&gt;{m}&lt;/b&gt;.</value>
+  </data>
+  <data name="msgFoldersNotAllowed" xml:space="preserve">
+    <value>Drag &amp; drop files only! Skipped {n} dropped folder(s).</value>
+  </data>
+  <data name="msgImageHeightLarge" xml:space="preserve">
+    <value>Height of image file "{name}" cannot exceed {size} px.</value>
+  </data>
+  <data name="msgImageHeightSmall" xml:space="preserve">
+    <value>Height of image file "{name}" must be at least {size} px.</value>
+  </data>
+  <data name="msgImageResizeError" xml:space="preserve">
+    <value>Could not get the image dimensions to resize.</value>
+  </data>
+  <data name="msgImageResizeException" xml:space="preserve">
+    <value>Error while resizing the image.&lt;pre&gt;{errors}&lt;/pre&gt;</value>
+  </data>
+  <data name="msgImageWidthLarge" xml:space="preserve">
+    <value>Width of image file "{name}" cannot exceed {size} px.</value>
+  </data>
+  <data name="msgImageWidthSmall" xml:space="preserve">
+    <value>Width of image file "{name}" must be at least {size} px.</value>
+  </data>
+  <data name="msgInvalidFileExtension" xml:space="preserve">
+    <value>Invalid extension for file "{name}". Only "{extensions}" files are supported.</value>
+  </data>
+  <data name="msgInvalidFileName" xml:space="preserve">
+    <value>Invalid or unsupported characters in file name "{name}".</value>
+  </data>
+  <data name="msgInvalidFileType" xml:space="preserve">
+    <value>Invalid type for file "{name}". Only "{types}" files are supported.</value>
+  </data>
+  <data name="msgLoading" xml:space="preserve">
+    <value>Loading file {index} of {files} ...</value>
+  </data>
+  <data name="msgNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="msgNoFilesSelected" xml:space="preserve">
+    <value>No files selected</value>
+  </data>
+  <data name="msgPaused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="msgPendingTime" xml:space="preserve">
+    <value>{time} remaining</value>
+  </data>
+  <data name="msgPlaceholder" xml:space="preserve">
+    <value>Select {files} ...</value>
+  </data>
+  <data name="msgProgress" xml:space="preserve">
+    <value>Loading file {index} of {files} - {name} - {percent}% completed.</value>
+  </data>
+  <data name="msgProgressError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="msgResumableUploadRetriesExceeded" xml:space="preserve">
+    <value>Upload aborted beyond &lt;b&gt;{max}&lt;/b&gt; retries for file &lt;b&gt;{file}&lt;/b&gt;! Error Details: &lt;pre&gt;{error}&lt;/pre&gt;</value>
+  </data>
+  <data name="msgSelected" xml:space="preserve">
+    <value>{n} {files} selected</value>
+  </data>
+  <data name="msgSizeTooLarge" xml:space="preserve">
+    <value>File "{name}" (&lt;b&gt;{size} KB&lt;/b&gt;) exceeds maximum allowed upload size of &lt;b&gt;{maxSize} KB&lt;/b&gt;.</value>
+  </data>
+  <data name="msgSizeTooSmall" xml:space="preserve">
+    <value>File "{name}" (&lt;b&gt;{size} KB&lt;/b&gt;) is too small and must be larger than &lt;b&gt;{minSize} KB&lt;/b&gt;.</value>
+  </data>
+  <data name="msgTotalFilesTooMany" xml:space="preserve">
+    <value>You can upload a maximum of &lt;b&gt;{m}&lt;/b&gt; files (&lt;b&gt;{n}&lt;/b&gt; files detected).</value>
+  </data>
+  <data name="msgUploadAborted" xml:space="preserve">
+    <value>The file upload was aborted</value>
+  </data>
+  <data name="msgUploadBegin" xml:space="preserve">
+    <value>Initializing ...</value>
+  </data>
+  <data name="msgUploadEmpty" xml:space="preserve">
+    <value>No valid data available for upload.</value>
+  </data>
+  <data name="msgUploadEnd" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="msgUploadError" xml:space="preserve">
+    <value>Upload Error</value>
+  </data>
+  <data name="msgUploadResume" xml:space="preserve">
+    <value>Resuming upload &amp;hellip;</value>
+  </data>
+  <data name="msgUploadThreshold" xml:space="preserve">
+    <value>Processing ...</value>
+  </data>
+  <data name="msgValidationError" xml:space="preserve">
+    <value>Validation Error</value>
+  </data>
+  <data name="msgZoomModalHeading" xml:space="preserve">
+    <value>Detailed Preview</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old password</value>
+  </data>
+  <data name="OldPasswordWrong" xml:space="preserve">
+    <value>The old password you have entered is incorrect.</value>
+  </data>
+  <data name="OR" xml:space="preserve">
+    <value>OR</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordInvalidFormat" xml:space="preserve">
+    <value>Your password should containt atleast 1 upper-case letter, 1 number and 1 special character (!@#$%^&amp;*).</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>The password confirmation does not match!</value>
+  </data>
+  <data name="PersonalNumber" xml:space="preserve">
+    <value>Personal Number</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Proceed" xml:space="preserve">
+    <value>Proceed</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Profile Picture</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="ProjectID" xml:space="preserve">
+    <value>Project ID</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="removeLabel" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="removeTitle" xml:space="preserve">
+    <value>Clear selected files</value>
+  </data>
+  <data name="removeTitle1" xml:space="preserve">
+    <value>Remove file</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="SelectProfilePicture" xml:space="preserve">
+    <value>Select profile picture...</value>
+  </data>
+  <data name="SetupPasswordTitle" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="SignInFacebook" xml:space="preserve">
+    <value>Sign in using Facebook</value>
+  </data>
+  <data name="SignInGoogle" xml:space="preserve">
+    <value>Sign in using Google</value>
+  </data>
+  <data name="SignInToStart" xml:space="preserve">
+    <value>Sign in to start your session</value>
+  </data>
+  <data name="sProcessing" xml:space="preserve">
+    <value>Processing</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="TeamLead" xml:space="preserve">
+    <value>Team Lead</value>
+  </data>
+  <data name="TeamMembers" xml:space="preserve">
+    <value>Team Members</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="uploadBatch" xml:space="preserve">
+    <value>batch file upload</value>
+  </data>
+  <data name="uploadExtra" xml:space="preserve">
+    <value>form data upload</value>
+  </data>
+  <data name="uploadLabel" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="uploadRetryTitle" xml:space="preserve">
+    <value>Retry upload</value>
+  </data>
+  <data name="uploadThumb" xml:space="preserve">
+    <value>file upload</value>
+  </data>
+  <data name="uploadTitle" xml:space="preserve">
+    <value>Upload selected files</value>
+  </data>
+  <data name="uploadTitle1" xml:space="preserve">
+    <value>Upload file</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UserAddForm" xml:space="preserve">
+    <value>Form for adding new users</value>
+  </data>
+  <data name="UserBirthdayDescription" xml:space="preserve">
+    <value>Specify the date when user is born</value>
+  </data>
+  <data name="UserBirthdayTitle" xml:space="preserve">
+    <value>User birthday</value>
+  </data>
+  <data name="UserConfirmPasswordDescription" xml:space="preserve">
+    <value>Enter the user confirm password. The confirm password is required should be the same as password!</value>
+  </data>
+  <data name="UserConfirmPasswordTitle" xml:space="preserve">
+    <value>User confirm password</value>
+  </data>
+  <data name="UserEditForm" xml:space="preserve">
+    <value>Form for editing current user</value>
+  </data>
+  <data name="UserEmailDescription" xml:space="preserve">
+    <value>Enter the user email. The user's email is required and should be in valid email format. Example: name.surname@gmail.com</value>
+  </data>
+  <data name="UserEmailTitle" xml:space="preserve">
+    <value>User email</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UserSettings" xml:space="preserve">
+    <value>User Settings</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="YourAccount" xml:space="preserve">
+    <value>Your Account</value>
+  </data>
+  <data name="YourPersonalInfo" xml:space="preserve">
+    <value>Your Personal Info</value>
+  </data>
+  <data name="YourProfile" xml:space="preserve">
+    <value>Your Profile</value>
+  </data>
+</root>

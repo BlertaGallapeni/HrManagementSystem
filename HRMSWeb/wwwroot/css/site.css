@@ -1,0 +1,24 @@
+html {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+        font-family: 'Montserrat', sans-serif;
+    }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+table.dataTable tbody td {
+    vertical-align: middle;
+}

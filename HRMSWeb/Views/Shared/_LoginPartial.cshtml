@@ -1,0 +1,37 @@
+﻿@using HRMS.DataAccess.Repository;
+@using Microsoft.AspNetCore.Identity
+@using Web.Views.Manage;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IApplicationUserRepository userRepository;
+
+@if (SignInManager.IsSignedIn(User)) {
+   
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="@userRepository.GetProfilePicturePath(((await UserManager.GetUserAsync(User)).Id), 160)" class="elevation-2" style="border-radius:50%; width:30px" alt="User Image">
+        <span class="text-dark"> &nbsp; @((await UserManager.GetUserAsync(User)).FirstName) @((await UserManager.GetUserAsync(User)).LastName) </span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">@SharedLocalizer["YourAccount"]</span>
+            <div class="dropdown-divider"></div>
+       
+            <a class="@ManageNavPages.IndexNavClass(ViewContext) dropdown-item" asp-area="Admin" asp-controller="Manage" asp-action="Profile">@SharedLocalizer["Profile"]</a>
+    
+        
+        <div class="dropdown-divider"></div>
+        <a asp-area="Admin" asp-controller="Manage" asp-action="Index" title="Manage" class="dropdown-item">
+                @SharedLocalizer["ManageAccount"]
+        </a>
+     
+        <div class="dropdown-divider"></div>
+        <form id="logoutForm" class="form-inline" asp-area="Admin" asp-controller="Account" asp-action="Logout" >
+        <button href="#" class="dropdown-item dropdown-footer" id="logout" type="submit"><i class="bi bi-box-arrow-left"></i> @SharedLocalizer["Logout"] 
+        </button> 
+        </form>
+        
+    </div>
+</li>
+ }
+

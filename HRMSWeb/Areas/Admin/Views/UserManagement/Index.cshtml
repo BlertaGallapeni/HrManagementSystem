@@ -1,0 +1,156 @@
+﻿@using HRMS.Models.ViewModels
+@model List<HRMS.Models.ViewModels.UserRolesViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+<div class="card">
+    <div class="card-header">
+        <div class="col">
+            <h2>
+                @SharedLocalizer["Users"]
+            </h2>
+            <ul class="nav nav-treeview" style="font-size:18px">
+                <li class="nav-item mr-2"><a style="color:black" href="">@SharedLocalizer["Dashboard"]</a></li>
+                <li class="nav-item text-black-50" active">/ @SharedLocalizer["Users"]</li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tblData" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>@SharedLocalizer["Name"]</th>
+                    <th>@SharedLocalizer["Email"]</th>
+                    <th>@SharedLocalizer["Phone"]</th>
+                    <th>@SharedLocalizer["Company"]</th>
+                    <th>@SharedLocalizer["JoinDate"]</th>
+                    <th>@SharedLocalizer["Roles"]</th>
+                    <th>@SharedLocalizer["Actions"]</th>
+                </tr>
+            </thead>
+        
+        </table>
+    </div>
+
+  
+</div>
+<div class="modal fade" id="modal-delete" style="display:none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+            </div>
+        </div>
+    </div>
+  </div>
+ </div>
+</div>
+</section>
+@section Scripts{
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.3.0/js/responsive.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable({
+                "sAjaxSource": "@Url.Action("GetUsersJson","UserManagement")",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bPaginate": true,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                "iDisplayLength": 6,
+                "iDisplayStart" : 6,
+                "columns": [
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            console.log(data);
+                            var actions = '<img src="' + data.profilePicture.path + '"  class="elevation-2" style="border-radius:50%; width:45px" alt="User Image">&emsp; ' + data.fullName
+                            return actions;
+                        },
+                        "width": "18%"
+                    },
+                    { "data": "email" },
+                    { "data": "phoneNumber" },
+                    { "data": "companyName" },
+                    { "data": "createdDate", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    {
+                        "data": null,
+                        "sClass": "text-center",
+                        "render": function (data, type, row) {
+                            var actions = ``;
+                            console.log(data);
+                            for (i = 0; i < data.roles.length; i++) {
+
+                                if (data.roles == "Employee") {
+                                    actions += `<span class="badge badge-pill badge-success" style="font-size:90%">${data.roles[i]}</span>`
+                                }
+                                else if (data.roles == "Admin") {
+                                    actions += `<span class="badge badge-pill badge-dark" style="font-size:90%">${data.roles[i]}</span>`
+                                }
+                                else if (i = 1 && data.roles == "Employee,Client") {
+
+                                    actions += `<span class="badge badge-pill badge-success" style="font-size:90%">${data.roles[0]}</span>`
+                                    actions += `<span class="badge badge-pill badge-info" style="font-size:90%">${data.roles[1]}</span>`
+                                }
+                                else {
+
+                                    actions += `<span class="badge badge-pill badge-info" style="font-size:90%">${data.roles[0]}</span>`
+                                }
+                            
+                            }
+                            return actions;
+
+                        },
+                        "width":"15%"
+                    },
+                    {
+                        "data": null,
+
+                        "render": function (data, type, row) {
+                            var actions = `
+                                     <div style = "text-align:center" >
+                                            <a type="button" data-toggle="dropdown" aria-expanded="true" > <i class="bi bi-three-dots-vertical"> </i>
+                                                </a>
+                                                <ul class="dropdown-menu" style = "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
+                                                    <li><a class="dropdown-item" href ="/Admin/UserManagement/Manage?userId=${data.id}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["ManageRole"] </a></li>
+                                                </ul>
+                                     </div>`
+                            return actions;
+                        },
+                        "width": "3%"
+                    }
+                ]
+            });
+        })
+
+     
+    </script>
+   }
