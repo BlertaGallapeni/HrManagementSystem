@@ -24,6 +24,8 @@ namespace HRMS.Models.Entities
         [Required]
         [Display(Name = "Personal Number")]
         public string PersonalNumber { get; set; }
+        public DateTime? Birthday { get; set; }
+        public char? Gender { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         [Required]
         public int CompanyId { get; set; }

@@ -24,7 +24,7 @@ namespace HRMS.DataAccess.Repository
             var query= _db.Departments.Where(x=>x.Deleted!=true).Select(x=> new DepartmentVM
             {
                Id=x.Id,
-               Name=culture=="sq-AL"?x.NameAl:x.Name,
+               Name =culture=="sq-AL"?x.NameAl:x.Name,
                HasEmployee=_db.Employees.Any(y=>y.DepartmentId==x.Id)
             });
             return query.ToList();

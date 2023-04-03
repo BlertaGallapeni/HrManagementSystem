@@ -3,7 +3,7 @@ using HRMS.DataAccess.Repository.IRepository;
 using HRMS.Models;
 using HRMS.Models.Entities;
 using HRMS.Models.ViewModels;
-using HRMSWeb.Areas.Admin.Views.Helpers;
+using HRMSWeb.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -60,18 +60,23 @@ namespace HRMSWeb.Areas.Admin.Controllers
         }
         
         // GET
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(string? id)
         {
-            if (id == null || id == 0)
+            if (id != null)
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
             }
-            var dep = _unitOfWork.Designation.GetFirstOrDefault(u => u.Id == id, includeProperties: "Department");
+            var dep = _unitOfWork.Designation.GetFirstOrDefault(u => u.Id == int.Parse(id), includeProperties: "Department");
             if (dep == null)
             {
                 return NotFound();
             }
             var model = _mapper.Map<DesignationVM>(dep);
+            model.EncryptedId = EncryptionHelper.Encrypt(id);
 
             return View("Edit", model);
         }
@@ -84,6 +89,7 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                model.Id = int.Parse(EncryptionHelper.Decrypt(model.EncryptedId));
                 var obj = _mapper.Map<Designation>(model);
                 
                 _unitOfWork.Designation.Update(obj);
@@ -96,22 +102,25 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
 
         //GET
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(string? id)
         {
-            if (id == null || id == 0)
+            if (id != null)
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
             }
 
-            var dep = _unitOfWork.Designation.GetFirstOrDefault(u => u.Id == id);
+            var dep = _unitOfWork.Designation.GetFirstOrDefault(u => u.Id == int.Parse(id));
 
             if (dep == null)
             {
                 return NotFound();
             }
             var model = _mapper.Map<DesignationVM>(dep);
-
-
+            model.EncryptedId = EncryptionHelper.Encrypt(id);
             return PartialView("_Delete", model);
         }
 
@@ -119,19 +128,23 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeletePOST(string? id)
         {
-            if (id == null || id == 0)
+            if (id != null) 
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
             }
-            if (_unitOfWork.Designation.HasEmployee((int)id))
+            if (_unitOfWork.Designation.HasEmployee(int.Parse(id)))
             {
                 TempData["warning"] = "Can not be deleted! There are employees populated with this designation.";
 
                 return RedirectToAction("Index");
             }
-            var obj = _unitOfWork.Designation.GetFirstOrDefault(u => u.Id == id);
+            var obj = _unitOfWork.Designation.GetFirstOrDefault(u => u.Id == int.Parse(id));
             if (obj == null)
             {
                 NotFound();
@@ -153,8 +166,10 @@ namespace HRMSWeb.Areas.Admin.Controllers
         public IActionResult GetDesignationsJson(JqueryDatatableParam param)
         {
             List<DesignationVM> designationsList = new List<DesignationVM>();
-            var queryDesignations = _unitOfWork.Designation.GetDesignations();
-
+            var queryDesignations = _unitOfWork.Designation.GetDesignations().Select(e => {
+                e.EncryptedId = EncryptionHelper.Encrypt(e.Id.ToString());
+                return e;
+            }); 
             int totalRecords = queryDesignations.Count();
             queryDesignations = queryDesignations.Where(d => string.Concat(d.Name,d.DepartmentName,d.Id).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase));
             if (param.sSortDir_0 == "asc")

@@ -6,5 +6,8 @@ namespace HRMS.DataAccess.Repository
 {
     public interface IEmployeeRepository : IRepository<Employee>
     {
+        bool IsTeamLead(string userId);
+        public bool IsTeamLeadOfProject(string userId, int projectId);
+
     }
 }

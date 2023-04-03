@@ -1,0 +1,205 @@
+﻿@model List<LeaveVM>
+
+@{
+    ViewData["Title"] = "MyLeave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<style>
+    table.dataTable tbody td {
+        vertical-align: middle;
+    }
+    .col-md-3 {
+    -ms-flex: 0 0 0%;
+    flex: 0 0 5%;
+    }
+</style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+  @*  <div class="jumbotron">
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                @foreach (var item in Model.Leaves)
+                {
+                    <li class="list-group-item">
+                        <h6>@item.LeaveType.Name <span class="badge badge-secondary">@item.NumberOfDays</span></h6>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>*@
+     <div class="row mx-auto justify-content-between">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="card" style="width: 19rem;">
+                    <div class="card-body">
+                        <h3 class="text-center">@item.LeaveType.Name</h3> <br>
+                        <h6 class="card-text">Total Number of Days: <span class="badge bg-olive float-right"> @item.LeaveType.DefaultDays</span></h6>
+                        <h6 class="card-text">Number of Days Left: <span class="badge badge-secondary float-right"> @item.NumberOfDaysLeft</span></h6>
+                    </div>
+                </div>
+            </div>
+        }
+     </div>
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+
+                            <div class="col">
+                                <h2>
+                                    @SharedLocalizer["My Leave Requests"]
+                                </h2>
+                                <ul class="nav nav-treeview" style="font-size:18px">
+                                    <li class="nav-item mr-2"><a style="color:black" href="">@SharedLocalizer["Dashboard"]</a></li>
+                                    <li class="nav-item text-black-50" active">/  @SharedLocalizer["My Leave Requests"]</li>
+                                </ul>
+                            </div>
+                            <div class="col-auto mx-auto mt-3">
+                                <a class="btn rounded-pill float-right bg-olive" asp-area="Admin" asp-controller="LeaveRequest" asp-action="Create">
+                                    <i class="fas fa-plus"></i> &nbsp;  @SharedLocalizer["Request Leave"]
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblData" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Date Requested</th>
+                                    <th>Approval Status</th>
+                                    <th>@SharedLocalizer["Actions"]</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+
+                <div class="modal fade" id="modal-delete" style="display: none; " aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" align="center">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+</section>
+<!-- /.row -->
+@section Scripts {
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.3.0/js/responsive.dataTables.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable({
+                "sAjaxSource": "@Url.Action("GetEmpLeaveRequestsJson","LeaveRequest")",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bPaginate": true,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                //"iDisplayLength": 2,
+                //"iDisplayStart" : 2,
+                "columns": [
+                    { "data": "leaveType.name" },
+                    { "data": "startDate", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    { "data": "endDate", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    { "data": "dateRequested", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    {
+                        "data": null,
+                        "sClass": "text-center",
+                        "render": function (data, type, row) {
+                            var actions = ``;
+                            if (data.approved == true) {
+                                actions += `<span class="badge badge-success">Approved</span>`
+                            }
+                            else if (data.cancelled == true) {
+                                actions += `<span class="badge badge-secondary">Cancelled</span>`
+                            }
+                            else if (data.approved == false) {
+                                actions += `<span class="badge badge-danger"> Rejected </span>`
+                            }
+                            else {
+                                actions += `<span class="badge badge-warning"> Pending Approval </span>`
+                            }
+
+                            return actions;
+
+                        },
+                        "width": "15%"
+                    },
+                    {
+                        "data": null,
+                        "sClass": "text-center",
+                        "render": function (data, type, row) {
+                            var actions = ``;
+                           if ((!data.cancelled && (data.startDate > '@DateTime.Now') && data.approved == null))
+    {
+                     actions += `<a href="/Admin/LeaveRequest/CancelRequest?id=${data.id}" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel ')">
+                                <i class="fa fa-trash" aria-hidden="true"></i></a>`
+                            }
+                            return actions;
+                        },
+                       "width": "10%"
+                    },
+
+                ]
+            });
+        })
+
+        function deleteDepartment(id) {
+            $.get("/Admin/Department/Delete", { id: id }, function (result) {
+                $(".modal-body").html(result);
+            })
+        }
+
+    </script>
+}
+
+
+
+

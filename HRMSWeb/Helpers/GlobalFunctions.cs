@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Localization;
 
-namespace HRMSWeb.Areas.Admin.Views.Helpers
+namespace HRMSWeb.Helpers
 {
     public class GlobalFunctions
     {

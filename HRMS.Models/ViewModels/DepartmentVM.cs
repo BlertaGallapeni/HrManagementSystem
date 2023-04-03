@@ -12,6 +12,7 @@ namespace HRMS.Models.ViewModels
     public class DepartmentVM
     {
         public int Id { get; set; }
+        public string? EncryptedId { get; set; }
         [Required]
         public string Name{ get; set; }
         [Required]

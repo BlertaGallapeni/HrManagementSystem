@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="6.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.13">
       <PrivateAssets>all</PrivateAssets>
@@ -45,6 +46,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Leave\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Leave\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\Create.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\Details.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\Index.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\MyLeave.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Create.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Details.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Index.cshtml" />
     <None Include="wwwroot\lib\fileinput\js\fileinput.js" />
     <None Include="wwwroot\lib\fileinput\js\fileinput.min.js" />
     <None Include="wwwroot\lib\tooltip\js\plugins\tooltipster\SVG\tooltipster-SVG.js" />

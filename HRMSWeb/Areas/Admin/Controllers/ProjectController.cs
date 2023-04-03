@@ -4,9 +4,11 @@ using HRMS.DataAccess.Repository.IRepository;
 using HRMS.Models;
 using HRMS.Models.Entities;
 using HRMS.Models.ViewModels;
-using HRMSWeb.Areas.Admin.Views.Helpers;
+using HRMS.Utility;
+using HRMSWeb.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Runtime.Intrinsics.Arm;
 using Umbraco.Core.Models.Membership;
 
@@ -16,21 +18,31 @@ namespace HRMSWeb.Areas.Admin.Controllers
     public class ProjectController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly AppDbContext _db;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly AppDbContext _context;
 
-        public ProjectController(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext db, UserManager<ApplicationUser> userManager)
+        public ProjectController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager, AppDbContext context)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _db = db;
             _userManager = userManager;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+            var user = _unitOfWork.ApplicationUser.GetFirstOrDefault((x => x.Id == userId && x.Deleted != true));
+            var roleName = _userManager.GetRolesAsync(user).Result.First();
+            if (roleName == SD.Role_Employee)
+            {
+                return View();
+            }
+            else
+            {
+                return View("IndexAdmin");
+            }
         }
 
         //GET
@@ -45,29 +57,43 @@ namespace HRMSWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                Team team = new Team();
-                team.TeamLeadId = model.TeamLeadId;
-                team.StatusId = 3;
-                _unitOfWork.Team.Add(team);
-                _unitOfWork.Save();
-                foreach (var employee in model.Employees)
-                {
-                    TeamMember teamMember = new TeamMember();
-                    teamMember.Team = team;
-                    teamMember.Employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.Id == employee);
-                    _unitOfWork.TeamMember.Add(teamMember);
-                }
+                var transaction = _context.Database.BeginTransaction();
+                
+                    try
+                    {
+                        Team team = new Team();
+                        team.TeamLeadId = model.TeamLeadId;
+                        team.StatusId = 3;
+                        _unitOfWork.Team.Add(team);
+                        _unitOfWork.Save();
+                        foreach (var employee in model.Employees)
+                        {
+                            TeamMember teamMember = new TeamMember();
+                            teamMember.Team = team;
+                            teamMember.Employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.Id == employee);
+                            _unitOfWork.TeamMember.Add(teamMember);
+                        }
 
-                _unitOfWork.Save();
-                Project project = _mapper.Map<Project>(model);
-                project.Team= team;
-                _unitOfWork.Project.Add(project);
-                _unitOfWork.Save();
-                TempData["success"] = "Project added successfully";
+                        _unitOfWork.Save();
+                        Project project = _mapper.Map<Project>(model);
+                        project.Team = team;
+                        _unitOfWork.Project.Add(project);
+                        _unitOfWork.Save();
+                        TempData["success"] = "Project added successfully";
 
-                return RedirectToAction("Index");
+                        transaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        TempData["error"] = "Project not added.";
+                        return RedirectToAction("Index");
+                    }
 
             }
+
+            
             return View("Create");
         }
         //GET
@@ -95,27 +121,28 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var team = _unitOfWork.Team.GetFirstOrDefault(x => x.Id == model.TeamId,includeProperties:"TeamMembers") ;
+                var team = _unitOfWork.Team.GetFirstOrDefault(x => x.Id == model.TeamId, includeProperties: "TeamMembers");
                 team.TeamLeadId = model.TeamLeadId;
                 _unitOfWork.Team.Update(team);
-                if(!team.TeamMembers.Select(x => x.EmployeeId).Equals(model.Employees)){
+                if (!team.TeamMembers.Select(x => x.EmployeeId).Equals(model.Employees))
+                {
                     foreach (var empDel in team.TeamMembers.Select(x => x.EmployeeId).Except(model.Employees))
                     {
                         _unitOfWork.TeamMember.Remove(team.TeamMembers.FirstOrDefault(x => x.EmployeeId == empDel));
                     }
                     foreach (var emp in model.Employees)
-                    {                      
+                    {
                         if (!team.TeamMembers.Select(x => x.EmployeeId).Contains(emp))
                         {
-                            TeamMember teamMember= new TeamMember();
-                            teamMember.Team=team;
-                            teamMember.Employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.Id == emp);
-                            _unitOfWork.TeamMember.Add(teamMember); 
-                        }                     
-                    }           
+                            TeamMember teamMember = new TeamMember();
+                            teamMember.Team = team;
+                            teamMember.EmployeeId = emp;
+                            _unitOfWork.TeamMember.Add(teamMember);
+                        }
+                    }
                 }
                 var p = _unitOfWork.Project.GetFirstOrDefault(x => x.Id == model.Id);
-                _mapper.Map(model,p);
+                _mapper.Map(model, p);
                 _unitOfWork.Save();
                 TempData["success"] = "Project updated successfully";
                 return RedirectToAction("Index");
@@ -131,7 +158,7 @@ namespace HRMSWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var pro = _unitOfWork.Project.GetFirstOrDefault(u => u.Id == id && u.Deleted!=true);
+            var pro = _unitOfWork.Project.GetFirstOrDefault(u => u.Id == id && u.Deleted != true);
 
             if (pro == null)
             {
@@ -164,66 +191,69 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
-
+        public int GetPriorityOrder(string priority)
+        {
+            return priority switch
+            {
+                "High" => 1,
+                "Medium" => 2,
+                "Low" => 3,
+                _ => 3,
+            };
+        }
 
         public IActionResult GetProjectsJson(JqueryDatatableParam param)
         {
             var userId = _userManager.GetUserId(User);
             var user = _unitOfWork.ApplicationUser.GetFirstOrDefault((x => x.Id == userId && x.Deleted != true));
             var roleName = _userManager.GetRolesAsync(user).Result.First();
-            if (roleName == "Admin")
+            IEnumerable<ProjectVM> queryProjects = new List<ProjectVM>();
+
+            queryProjects = _mapper.Map<IEnumerable<ProjectVM>>(_unitOfWork.Project.GetProjectsByRole(userId, roleName, includeProperties: "Priority,Status,RateType,Team.Status,Team.Employee.ApplicationUser.UserThumbnail,Team.TeamMembers.Employee.ApplicationUser.UserThumbnail")).Select(e => {
+                e.IsTeamLead = _unitOfWork.Project.IsTeamLead(userId);
+                return e;
+            });
+
+            var culture = GlobalFunctions.GetCulture(HttpContext);
+            int totalRecords = queryProjects.Count();
+            queryProjects = queryProjects.Where(pro => string.Concat(pro.Name).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase)
+                                                    || string.Concat(pro.ClientId).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase)
+                                                    || string.Concat(pro.StatusName).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase)
+                                                    || string.Concat(pro.TeamLeadEmail).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase)
+                                                    || string.Concat(pro.TeamStatusName).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase));
+            switch (param.iSortCol_0)
             {
-                var queryProjects = _mapper.Map<IEnumerable<ProjectVM>>(_unitOfWork.Project.GetAll(x => x.Deleted != true, includeProperties: "Priority,Status,RateType,Team.Status,Team.Employee.ApplicationUser.UserThumbnail,Team.TeamMembers.Employee.ApplicationUser.UserThumbnail"));
-                var culture = GlobalFunctions.GetCulture(HttpContext);
-                int totalRecords = queryProjects.Count();
-                queryProjects = queryProjects.Where(pro => string.Concat(pro.Name).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase));
-                if (param.sSortDir_0 == "asc")
-                    queryProjects = queryProjects.OrderBy(x => x.Name);
-                else
-                    queryProjects = queryProjects.OrderByDescending(x => x.Name);
-                int totalRecordsFiltered = queryProjects.Count();
-
-                queryProjects = queryProjects.Skip(param.iDisplayStart).Take(param.iDisplayLength).ToList();
-
-                return Json(new
-                {
-                    param.sEcho,
-                    iTotalRecords = totalRecords,
-                    iTotalDisplayRecords = totalRecords,
-                    aaData = queryProjects
-                });
+                case 0:
+                    queryProjects = param.sSortDir_0 == "asc" ? queryProjects.OrderBy(x => x.Name) : queryProjects.OrderByDescending(x => x.Name);
+                    break;
+                case 1:
+                    queryProjects = param.sSortDir_0 == "asc" ? queryProjects.OrderBy(x => x.ProjectID) : queryProjects.OrderByDescending(x => x.ProjectID);
+                    break;
+                case 4:
+                    queryProjects = param.sSortDir_0 == "asc" ? queryProjects.OrderBy(x => x.EndDate) : queryProjects.OrderByDescending(x => x.EndDate);
+                    break;
+                case 5:
+                    queryProjects = param.sSortDir_0 == "asc" ? queryProjects.OrderBy(x => GetPriorityOrder(x.PriorityName)) : queryProjects.OrderByDescending(x => GetPriorityOrder(x.PriorityName));
+                    break;
+                case 6:
+                    queryProjects = param.sSortDir_0 == "asc" ? queryProjects.OrderBy(x => x.StatusName) : queryProjects.OrderByDescending(x => x.StatusName);
+                    break;
             }
-            else if (roleName=="Employee")
-            {                
-                var queryProjects = _mapper.Map<IEnumerable<ProjectVM>>(_unitOfWork.Project.GetAll(x => x.Team.Employee.ApplicationUser.Id==userId &&  x.Deleted != true, includeProperties: "Priority,Status,RateType,Team.Status,Team.Employee.ApplicationUser.UserThumbnail,Team.TeamMembers.Employee.ApplicationUser.UserThumbnail"));
-                var culture = GlobalFunctions.GetCulture(HttpContext);
-                int totalRecords = queryProjects.Count();
-                queryProjects = queryProjects.Where(pro => string.Concat(pro.Name).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase));
-                if (param.sSortDir_0 == "asc")
-                    queryProjects = queryProjects.OrderBy(x => x.Name);
-                else
-                    queryProjects = queryProjects.OrderByDescending(x => x.Name);
-                int totalRecordsFiltered = queryProjects.Count();
+            int totalRecordsFiltered = queryProjects.Count();
 
-                queryProjects = queryProjects.Skip(param.iDisplayStart).Take(param.iDisplayLength).ToList();
+            queryProjects = queryProjects.Skip(param.iDisplayStart).Take(param.iDisplayLength).ToList();
 
-                return Json(new
-                {
-                    param.sEcho,
-                    iTotalRecords = totalRecords,
-                    iTotalDisplayRecords = totalRecords,
-                    aaData = queryProjects
-                });
-            }
-            else
+            return Json(new
             {
-               
-                return Json(null);
-            }
+                param.sEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = queryProjects
+            });
 
-            
+
         }
-
+      
 
         public IActionResult AllEmployees(int projectId)
         {

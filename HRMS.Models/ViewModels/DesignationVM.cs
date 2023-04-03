@@ -14,6 +14,7 @@ namespace HRMS.Models.ViewModels
     public class DesignationVM
     {
         public int Id { get; set; }
+        public string? EncryptedId { get; set; }
         [Required]
         [StringLength(50)]
         public string Name { get; set; }

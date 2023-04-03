@@ -29,6 +29,9 @@ namespace HRMS.DataAccess.Repository
             RateType = new RateTypeRepository(_db);
             TeamMember = new TeamMemberRepository(_db);
             Task = new TaskRepository(_db);
+            Leave = new LeaveRepository(_db);    
+            LeaveRequest = new LeaveRequestRepository(_db);
+            LeaveType = new LeaveTypeRepository(_db);
         }
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public ICompanyRepository Company { get; private set; }
@@ -43,7 +46,10 @@ namespace HRMS.DataAccess.Repository
         public IRateTypeRepository RateType { get; private set; }
         public ITeamMemberRepository TeamMember { get; private set; }
         public ITaskRepository Task { get; private set; }
-       
+        public ILeaveRepository Leave { get; private set; }
+        public ILeaveTypeRepository LeaveType { get; private set; }
+        public ILeaveRequestRepository LeaveRequest { get; private set; }
+
 
         public void Save()
         {

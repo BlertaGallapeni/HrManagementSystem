@@ -56,19 +56,7 @@ namespace HRMS.DataAccess.Repository
             }
             return query.ToList();
         }
-        public List<KeyValuePair<int,string>> GetStatusListByLang(string culture, string q, string type)
-        {
-            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-            {
-                return _db.Status.Where(x =>x.StatusType.Contains(type) && culture == "sq-AL" ? x.NameAl.ToLower().StartsWith(q.ToLower()) : x.Name.ToLower().StartsWith(q.ToLower())).Select(x => new KeyValuePair<int, string>(x.Id, culture == "sq-AL" ? x.NameAl : x.Name)).ToList();
-            }
-            else
-            {
-                return _db.Status.Where(x => x.StatusType.Contains(type)).Select(x => new KeyValuePair<int, string>(x.Id, culture == "sq-AL" ? x.NameAl : x.Name)).ToList();
-            }      
-        }
-
-
+  
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
         {
 
@@ -106,5 +94,17 @@ namespace HRMS.DataAccess.Repository
             dbSet.RemoveRange(entity);
 
         }
+        public List<KeyValuePair<int, string>> GetStatusListByLang(string culture, string q, string type)
+        {
+            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+            {
+                return _db.Status.Where(x => x.StatusType.Contains(type) && culture == "sq-AL" ? x.NameAl.ToLower().StartsWith(q.ToLower()) : x.Name.ToLower().StartsWith(q.ToLower())).Select(x => new KeyValuePair<int, string>(x.Id, culture == "sq-AL" ? x.NameAl : x.Name)).ToList();
+            }
+            else
+            {
+                return _db.Status.Where(x => x.StatusType.Contains(type)).Select(x => new KeyValuePair<int, string>(x.Id, culture == "sq-AL" ? x.NameAl : x.Name)).ToList();
+            }
+        }
+
     }
 }

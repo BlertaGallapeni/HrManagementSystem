@@ -15,6 +15,9 @@ using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 using HRMSWeb.Helpers;
+using System.Text.Json.Serialization;
+using HRMSWeb.Hubs;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -47,6 +50,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; }); 
 builder.Services.AddMvc()
                .AddViewLocalization(
@@ -102,6 +106,11 @@ SeedDatabase();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<LeaveRequestsHub>("/leaveRequestsHub");
+});
 app.MapRazorPages();
 app.UseEndpoints(endpoints =>
 {

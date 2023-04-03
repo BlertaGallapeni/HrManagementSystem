@@ -5,8 +5,8 @@
     </div>
 
 <form id="formdep" method="post" asp-controller="Department" asp-action="Create">
+   @Html.AntiForgeryToken()
     <div class="card-body row">
-        @Html.AntiForgeryToken()
         <div class="mb-3 form-group col-6">
                 <label asp-for="Name"></label><span class="text-danger text-bold">&nbsp;*&nbsp;<i class="flag-icon flag-icon-us mr-2"></i></span>
             <input asp-for="Name" class="form-control"/>

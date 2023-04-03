@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Hosting;
 using Umbraco.Core.Models.Membership;
-using HRMSWeb.Areas.Admin.Views.Helpers;
 using Umbraco.Core.Persistence.Repositories;
 using HRMSWeb.Helpers;
+using System.Web.Helpers;
 
 namespace HRMSWeb.Areas.Admin.Controllers
 {
@@ -49,6 +49,10 @@ namespace HRMSWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            List<SelectListItem> gender = new List<SelectListItem>();
+            gender.Add(new SelectListItem() { Text = "Female", Value = "F" });
+            gender.Add(new SelectListItem() { Text = "Male", Value = "M" });
+            ViewBag.Gender = gender;
             var model = new ClientVM()
             {
                 ApplicationUserVM = new ApplicationUserVM()
@@ -124,6 +128,10 @@ namespace HRMSWeb.Areas.Admin.Controllers
                 return NotFound();
 
             }
+            List<SelectListItem> gender = new List<SelectListItem>();
+            gender.Add(new SelectListItem() { Text = "Female", Value = "F" });
+            gender.Add(new SelectListItem() { Text = "Male", Value = "M" });
+            ViewBag.Gender = gender;
             var client = _unitOfWork.Client.GetFirstOrDefault(x => x.Id == id, includeProperties: "ApplicationUser,Status,ApplicationUser.UserThumbnail");
             var model = _mapper.Map<ClientVM>(client);
 
@@ -214,6 +222,7 @@ namespace HRMSWeb.Areas.Admin.Controllers
         }
 
         public IActionResult GetClientsJson(JqueryDatatableParam param)
+        
         {
             List<ClientVM> clientsList = new List<ClientVM>();
             var queryClients = _mapper.Map<IEnumerable<ClientVM>>(_unitOfWork.Client.GetAll(x => x.Deleted != true, includeProperties: "ApplicationUser,Status,ApplicationUser.UserThumbnail"));
@@ -229,12 +238,26 @@ namespace HRMSWeb.Areas.Admin.Controllers
                 cli.ApplicationUserVM.PhoneNumber,
                 cli.ApplicationUserVM.PersonalNumber).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase));
 
-            if (param.sSortDir_0 == "asc")
-                queryClients = queryClients.OrderBy(x => x.ClientID);
-            else
-                queryClients = queryClients.OrderByDescending(x => x.ApplicationUserVM.LastName);
+                switch (param.iSortCol_0)
+                {
+                    case 0:
+                        queryClients = param.sSortDir_0 == "asc" ? queryClients.OrderBy(x => x.CompanyName) : queryClients.OrderByDescending(x => x.CompanyName);
+                        break;
+                    case 1:
+                        queryClients = param.sSortDir_0 == "asc" ? queryClients.OrderBy(x => x.ClientID) : queryClients.OrderByDescending(x => x.ClientID);
+                        break;
+                    case 2:
+                        queryClients = param.sSortDir_0 == "asc" ? queryClients.OrderBy(x => x.ApplicationUserVM.FullName) : queryClients.OrderByDescending(x => x.ApplicationUserVM.FullName);
+                        break;
+                    case 3:
+                        queryClients = param.sSortDir_0 == "asc" ? queryClients.OrderBy(x => x.ApplicationUserVM.Email) : queryClients.OrderByDescending(x => x.ApplicationUserVM.Email);
+                        break;
+                    case 5:
+                        queryClients = param.sSortDir_0 == "asc" ? queryClients.OrderBy(x => x.StatusName) : queryClients.OrderByDescending(x => x.StatusName);
+                        break;
+                }
+                
             int totalRecordsFiltered = queryClients.Count();
-
             clientsList = queryClients.Skip(param.iDisplayStart).Take(param.iDisplayLength).ToList();
 
             return Json(new
@@ -251,7 +274,6 @@ namespace HRMSWeb.Areas.Admin.Controllers
         {
             var culture = GlobalFunctions.GetCulture(HttpContext);
             return Json(_unitOfWork.Status.GetStatusListByLang(culture, q, "C"));
-
         }
 
         [HttpGet]

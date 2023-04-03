@@ -4,9 +4,10 @@ using HRMS.DataAccess.Repository.IRepository;
 using HRMS.Models;
 using HRMS.Models.Entities;
 using HRMS.Models.ViewModels;
-using HRMSWeb.Areas.Admin.Views.Helpers;
+using HRMSWeb.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.Intrinsics.Arm;
+using Umbraco.Core;
 
 namespace HRMSWeb.Areas.Admin.Controllers
 {
@@ -26,9 +27,7 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<DepartmentVM> objDepartmentList =_mapper.Map<IEnumerable<DepartmentVM>>( _unitOfWork.Department.GetAll(x=>x.Deleted!=true));
-   
-            return View(objDepartmentList);
+            return View();
         }
 
         //GET
@@ -62,19 +61,23 @@ namespace HRMSWeb.Areas.Admin.Controllers
             return View("Create");
         }
         //GET
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(string? id)
         {
-            if (id == null || id == 0)
+            if(id != null) 
+            { 
+            id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
             }
-            var dep = _unitOfWork.Department.GetFirstOrDefault(u => u.Id == id);
+            var dep = _unitOfWork.Department.GetFirstOrDefault(u => u.Id == int.Parse(id));
             if (dep == null)
             {
                 return NotFound();
             }
             var model = _mapper.Map<DepartmentVM>(dep);
-        
+            model.EncryptedId = EncryptionHelper.Encrypt(id);
             return View("Edit", model);
         }
 
@@ -86,6 +89,7 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                model.Id = int.Parse(EncryptionHelper.Decrypt(model.EncryptedId));
                 var obj = _mapper.Map<Department>(model);
                 
                 _unitOfWork.Department.Update(obj);
@@ -97,21 +101,24 @@ namespace HRMSWeb.Areas.Admin.Controllers
         }
 
         //GET
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(string? id)
         {
-            if (id == null || id == 0)
+            if (id != null)
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
             }
 
-            var dep = _unitOfWork.Department.GetFirstOrDefault(u => u.Id == id);
+            var dep = _unitOfWork.Department.GetFirstOrDefault(u => u.Id == int.Parse(id));
 
             if (dep == null)
             {
                 return NotFound();
             }
             var model = _mapper.Map<DepartmentVM>(dep);
-
 
             return PartialView("_Delete", model);
         }
@@ -120,25 +127,28 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeletePOST(string? id)
         {
-            if (id == null || id == 0)
+            if (id != null)
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
             }
-            if (_unitOfWork.Department.HasEmployee((int)id))
+
+            if (_unitOfWork.Department.HasEmployee(int.Parse(id)))
             {
                 TempData["warning"] = "Can not be deleted! This department has employees.";
 
                 return RedirectToAction("Index");
             }
-            var obj = _unitOfWork.Department.GetFirstOrDefault(u => u.Id == id);
+            var obj = _unitOfWork.Department.GetFirstOrDefault(u => u.Id == int.Parse(id));
             if (obj == null)
             {
                 NotFound();
             }
-            //_unitOfWork.Department.Remove(obj);
-            //_unitOfWork.Save();
             _unitOfWork.Department.Delete(obj);
             _unitOfWork.Save();
             TempData["success"] = "Department deleted successfully";
@@ -157,7 +167,10 @@ namespace HRMSWeb.Areas.Admin.Controllers
         public IActionResult GetDepartmentsJson(JqueryDatatableParam param)
         {
             List<DepartmentVM> departmentList = new List<DepartmentVM>();
-            var queryDepartments = _unitOfWork.Department.GetDepartments();
+            var queryDepartments = _unitOfWork.Department.GetDepartments().Select(e => {
+                e.EncryptedId = EncryptionHelper.Encrypt(e.Id.ToString());
+                return e;
+            });
             var culture = GlobalFunctions.GetCulture(HttpContext);
             int totalRecords = queryDepartments.Count();
             queryDepartments = queryDepartments.Where(dep => string.Concat(culture=="sq-AL"?dep.NameAl:dep.Name).Contains(param.sSearch ?? "", StringComparison.OrdinalIgnoreCase));

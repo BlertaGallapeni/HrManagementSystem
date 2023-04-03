@@ -19,5 +19,8 @@ namespace HRMS.Utility
         public const string Lang_AL = "sq-AL";
         public const string Lang_US = "en-US";
 
+        public const char Male = 'M';
+        public const char Female = 'F';
+
     }
 }

@@ -1,0 +1,88 @@
+﻿@model TaskVM
+<style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: dimgrey !important;
+    }
+</style>
+@section Styles{
+    <link href="~/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="card card-secondary mx-auto">
+    <div class="card-header">
+        <h3 class="card-title">@SharedLocalizer["EditTask"]</h3>
+    </div>
+    <div asp-validation-summary="All" class="text-danger mt-2"></div>
+    <form id="formdep" method="post" asp-controller="Task" asp-action="EditEmpTask" asp-route-projectId="@Model.ProjectId" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <div class="card-body row">
+
+            <div class="mb-3 form-group col-4">
+                <label asp-for="StatusId">@SharedLocalizer["Status"]</label>
+                <select asp-for="StatusId" id="selectStatus" class="custom-select rounded-0 form-control ">
+                </select>
+                <span asp-validation-for="StatusId" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="modal-footer justify-content-between">
+            <a asp-controller="Task" asp-action="Index" asp-route-projectId="@Model.ProjectId" class="btn btn-secondary" style="width:150px">@SharedLocalizer["BackToList"]</a>
+            <button type="submit" class="btn bg-olive" style="width:150px">@SharedLocalizer["Update"]</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#selectStatus').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetStatus","Task")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.key,
+                                }
+                            })
+                        };
+                    }
+                },
+                // minimumInputLength: 1
+                placeholder: '--Select Status--',
+            });
+            if ('@Model.Id' != '0') {
+                var newOption = new Option('@Model.StatusName', '@Model.StatusId', null, true);
+                $("#selectStatus").append(newOption);
+            }
+
+
+
+        })
+    </script>
+
+    }

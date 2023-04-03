@@ -26,6 +26,10 @@ namespace HRMS.DataAccess.Data
             public DbSet<Project> Projects  { get; set; }
             public DbSet<Task> Tasks  { get; set; }
             public DbSet<UserThumbnail> UserThumbnail  { get; set; }
+            public DbSet<Leave> Leaves { get; set; }
+            public DbSet<LeaveType> LeaveTypes { get; set; }
+            public DbSet<LeaveRequest> LeaveRequests { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TeamMember>()

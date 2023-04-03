@@ -127,8 +127,8 @@
                                             <a type="button" data-toggle="dropdown" aria-expanded="true"><i class="bi bi-three-dots-vertical"></i>
                                              </a>
                                             <ul class="dropdown-menu" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
-                                                 <li><a class="dropdown-item" href="/Admin/Department/Edit?id=${data.id}" class="btn btn-outline-primary mx-2"><i class="bi bi-pencil-square text-info"></i> &nbsp; @SharedLocalizer["Edit"] </a></li>
-                                                         <li><a class="dropdown-item" href="" data-toggle="modal" data-target="#modal-delete" onClick=deleteDepartment(${data.id}) class="btn btn-outline-danger mx-2"><i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
+                                                 <li><a class="dropdown-item" href="/Admin/Department/Edit?id=${data.encryptedId}" class="btn btn-outline-primary mx-2"><i class="bi bi-pencil-square text-info"></i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                                                                         <li><a class="dropdown-item" href="" data-toggle="modal" data-target="#modal-delete" onClick=deleteDepartment("${data.encryptedId}") class="btn btn-outline-danger mx-2"><i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
                                             </ul>
                                         </div>`
 
@@ -138,7 +138,7 @@
                                             <a type="button" data-toggle="dropdown" aria-expanded="true"><i class="bi bi-three-dots-vertical"></i>
                                              </a>
                                                 <ul class="dropdown-menu" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
-                                                             <li><a class="dropdown-item" href="/Admin/Department/Edit?id=${data.id}" class="btn btn-outline-primary mx-2"><i class="bi bi-pencil-square text-info"></i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                                                     <li><a class="dropdown-item" href="/Admin/Department/Edit?id=${data.encryptedId}" class="btn btn-outline-primary mx-2"><i class="bi bi-pencil-square text-info"></i> &nbsp; @SharedLocalizer["Edit"] </a></li>
                                                 </ul>
                                        </div>`
                             }
@@ -154,8 +154,8 @@
 
         })
 
-        function deleteDepartment(id) {
-            $.get("/Admin/Department/Delete", { id: id }, function (result) {
+        function deleteDepartment(encryptedId) {
+            $.get("/Admin/Department/Delete", { id: encryptedId }, function (result) {
                 $(".modal-body").html(result);
             })
         }

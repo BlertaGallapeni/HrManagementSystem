@@ -63,6 +63,11 @@ namespace HRMSWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            List<SelectListItem> gender = new List<SelectListItem>();
+            gender.Add(new SelectListItem() { Text = "Female", Value = "F" });
+            gender.Add(new SelectListItem() { Text = "Male", Value = "M" });
+            ViewBag.Gender = gender;
+
             var model = new EmployeeVM()
             {
                 ApplicationUserVM = new ApplicationUserVM()
@@ -133,15 +138,23 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
 
         //GET
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(string? id)
         {
-            if (id == null || id == 0)
+            if (id != null)
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
-
             }
-            var emp = _unitOfWork.Employee.GetFirstOrDefault(x => x.Id == id, includeProperties: "ApplicationUser,Department,Designation,ApplicationUser.Company,ApplicationUser.UserThumbnail");
+            List<SelectListItem> gender = new List<SelectListItem>();
+            gender.Add(new SelectListItem() { Text = "Female", Value = "F" });
+            gender.Add(new SelectListItem() { Text = "Male", Value = "M" });
+            ViewBag.Gender = gender;
+            var emp = _unitOfWork.Employee.GetFirstOrDefault(x => x.Id == int.Parse(id), includeProperties: "ApplicationUser,Department,Designation,ApplicationUser.Company,ApplicationUser.UserThumbnail");
             var model = _mapper.Map<EmployeeVM>(emp);
+            model.EncryptedId = EncryptionHelper.Encrypt(id);
 
             return View("EditEmp", model);
         }
@@ -154,6 +167,7 @@ namespace HRMSWeb.Areas.Admin.Controllers
             {
                 return View("EditEmp", model);
             }
+            model.Id = int.Parse(EncryptionHelper.Decrypt(model.EncryptedId));
             var emp = _unitOfWork.Employee.GetFirstOrDefault(x => x.Id == model.Id);
             var user = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == model.ApplicationUserVM.Id);
 
@@ -189,21 +203,25 @@ namespace HRMSWeb.Areas.Admin.Controllers
             return RedirectToAction("Index");;
         }
         //GET
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(string? id)
         {
-            if (id == null || id == 0)
+            if (id != null)
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
             {
                 return NotFound();
             }
 
-            var employee = _unitOfWork.Employee.GetFirstOrDefault(u => u.Id == id && u.Deleted!=true);
+            var employee = _unitOfWork.Employee.GetFirstOrDefault(u => u.Id == int.Parse(id) && u.Deleted!=true);
             var model = _mapper.Map<EmployeeVM>(employee);
 
             if (employee == null)
             {
                 return NotFound();
             }
-
+            model.EncryptedId = EncryptionHelper.Encrypt(id);
             return PartialView("_DeleteEmp", model);
         }
 
@@ -211,9 +229,17 @@ namespace HRMSWeb.Areas.Admin.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeletePOST(string? id)
         {
-            var obj = _unitOfWork.Employee.GetFirstOrDefault(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (id != null)
+            {
+                id = EncryptionHelper.Decrypt(id);
+            }
+            if (id == "" || id == null || int.Parse(id) == 0)
+            {
+                return NotFound();
+            }
+            var obj = _unitOfWork.Employee.GetFirstOrDefault(u => u.Id == int.Parse(id), includeProperties: "ApplicationUser");
             if (obj == null)
             {
                 NotFound();
@@ -229,8 +255,10 @@ namespace HRMSWeb.Areas.Admin.Controllers
         public IActionResult GetEmployeesJson(JqueryDatatableParam param)
         {
             List<EmployeeVM> employeesList = new List<EmployeeVM>();
-            var queryEmployees = _mapper.Map<IEnumerable<EmployeeVM>>(_unitOfWork.Employee.GetAll(x => x.Deleted != true, includeProperties: "Department,Designation,ApplicationUser,ApplicationUser.Company,ApplicationUser.UserThumbnail"));
- 
+            var queryEmployees = _mapper.Map<IEnumerable<EmployeeVM>>(_unitOfWork.Employee.GetAll(x => x.Deleted != true, includeProperties: "Department,Designation,ApplicationUser,ApplicationUser.Company,ApplicationUser.UserThumbnail")).Select(e => {
+                e.EncryptedId = EncryptionHelper.Encrypt(e.Id.ToString());
+                return e;
+            });
             int totalRecords = queryEmployees.Count();
             queryEmployees = queryEmployees.Where(emp => string.Concat(emp.ApplicationUserVM.FirstName, 
                 emp.ApplicationUserVM.LastName, emp.EmployeeID, 

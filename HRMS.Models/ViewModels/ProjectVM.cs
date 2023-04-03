@@ -35,7 +35,7 @@ namespace HRMS.Models.ViewModels
         public string? TeamLeadPhone { get; set; }
         public string? TeamLeadProfilePic { get; set; }
         public string? TeamStatusName { get; set; }
-        public  List<EmployeeVM>? TeamMembers { get; set; }
+        public List<EmployeeVM>? TeamMembers { get; set; }
         public List<int> Employees { get; set; }
         public int ClientId { get; set; }
         public string? ClientName { get; set; }
@@ -43,5 +43,7 @@ namespace HRMS.Models.ViewModels
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public bool? Deleted { get; set; }
         public DateTime? DeletedDate { get; set; }
+        public bool? IsTeamLead { get; set; }
+
     }
 }

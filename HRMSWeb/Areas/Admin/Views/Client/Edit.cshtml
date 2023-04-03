@@ -6,8 +6,24 @@
 @section Styles {
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+
 
 }
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 <div class="card card-secondary mx-auto">
     <div class="card-header">
         <h3 class="card-title">@SharedLocalizer["EditClient"]</h3>
@@ -21,42 +37,59 @@
         <input asp-for="ApplicationUserVM.ProfilePicture.Name" type="hidden" />
         <input asp-for="ApplicationUserVM.ProfilePicture.Id" type="hidden" />
         <div class="card-body row">
-            <div class="mb-3 form-group col-6 py-2">
+            <div class="mb-3 form-group col-3">
                 <label asp-for="ApplicationUserVM.FirstName">@SharedLocalizer["FirstName"]</label><span class="text-danger text-bold">&nbsp;*</span>
                 <input asp-for="ApplicationUserVM.FirstName" class="form-control" />
                 <span asp-validation-for="ApplicationUserVM.FirstName" class="text-danger"></span>
             </div>
-            <div class="mb-3 form-group col-6 py-2">
+            <div class="mb-3 form-group col-3">
                 <label asp-for="ApplicationUserVM.LastName">@SharedLocalizer["LastName"]</label><span class="text-danger text-bold">&nbsp;*</span>
                 <input asp-for="ApplicationUserVM.LastName" class="form-control" />
                 <span asp-validation-for="ApplicationUserVM.LastName" class="text-danger"></span>
             </div>
-            <div class="mb-3 form-group col-6 py-2">
+            <div class="mb-3 form-group col-6">
+                <label asp-for="CompanyName">@SharedLocalizer["CompanyName"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-6">
                 <label asp-for="ApplicationUserVM.Email">@SharedLocalizer["Email"]</label><span class="text-danger text-bold">&nbsp;*</span>
                 <input asp-for="ApplicationUserVM.Email" class="form-control" />
                 <span asp-validation-for="ApplicationUserVM.Email" class="text-danger"></span>
             </div>
-            <div class="mb-3 form-group col-6 py-2">
+            <div class="form-group col-3">
+                <div class="form-group">
+                    <label>@SharedLocalizer["Birthday"]</label>
+                    <div class="input-group date" id="startD">
+                        <input type="text" asp-for="ApplicationUserVM.Birthday" readonly id="birthdatePicker" class="form-control help-sidebar" data-title="@SharedLocalizer["ScheduleStartTimeTitle"]" data-description="@SharedLocalizer["ScheduleStartTimeDescription"]" placeholder="" />
+                        <div class="input-group-append ">
+                            <span class="input-group-text"><i id="sCalendar" class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mb-3 form-group col-3">
+                <label asp-for="ApplicationUserVM.Gender">@SharedLocalizer["Gender"]</label>
+                <select asp-for="ApplicationUserVM.Gender" asp-items="@ViewBag.Gender" class="form-control">
+                </select>
+            </div>
+            <div class="mb-3 form-group col-3">
                 <label asp-for="ApplicationUserVM.PersonalNumber">@SharedLocalizer["PersonalNumber"]</label><span class="text-danger text-bold">&nbsp;*</span>
                 <input asp-for="ApplicationUserVM.PersonalNumber" class="form-control" />
                 <span asp-validation-for="ApplicationUserVM.PersonalNumber" class="text-danger"></span>
             </div>
-            <div class="mb-3 form-group col-6 py-2">
-                <label asp-for="ClientID">@SharedLocalizer["ClientID"]</label>
-                <input asp-for="ClientID" class="form-control" />
-                <span asp-validation-for="ClientID" class="text-danger"></span>
-            </div>
-            <div class="mb-3 form-group col-6 py-2">
+            <div class="mb-3 form-group col-3">
                 <label asp-for="ApplicationUserVM.PhoneNumber">@SharedLocalizer["Phone"] </label>
                 <input asp-for="ApplicationUserVM.PhoneNumber" class="form-control" />
                 <span asp-validation-for="ApplicationUserVM.PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="mb-3 form-group col-6 py-2">
-                <label asp-for="CompanyName">@SharedLocalizer["CompanyName"]</label>
-                <input asp-for="CompanyName" class="form-control" />
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            <div class="mb-3 form-group col-3">
+                <label asp-for="ClientID">@SharedLocalizer["ClientID"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <input asp-for="ClientID" class="form-control" />
+                <span asp-validation-for="ClientID" class="text-danger"></span>
             </div>
-            <div class="mb-3 form-group col-6 py-2">
+            <div class="mb-3 form-group col-3">
                 <label asp-for="StatusId">@SharedLocalizer["Status"]</label><span class="text-danger text-bold">&nbsp;*</span>
                 <select asp-for="StatusId" id="select2" class="custom-select rounded-0">
                     </select>
@@ -83,6 +116,8 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -420,7 +455,19 @@
                 });
             }
 
+            // Date range picker
+            $('#birthdatePicker').datepicker({
+                format: 'dd/mm/yyyy',
+                pickTime: false,
+                autoclose: true,
+                startView: 'month',
+                orientation: "bottom"
+            });
 
+
+            $('#sCalendar').on('click', function () {
+                $('#birthdatePicker').trigger('focus');
+            });
 
         })
 

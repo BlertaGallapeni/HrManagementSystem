@@ -1,0 +1,54 @@
+﻿@model LeaveTypeVM
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="timeline">
+
+            <div class="time-label">
+                <span class="bg-olive">Details</span>
+            </div>
+
+
+            <div>
+                <i class="fas fa-info bg-gray"></i>
+
+                <div class="timeline-item">
+                    <span class="time" style="font-size:20px"><i class="fas fa-clock"></i> </span>
+                    <h2 class="timeline-header" style="font-size:25px">Leave info</h2>
+                    <div class="timeline-body">
+                        <b>Leave Type Name:</b> @Html.DisplayFor(model => model.Name) 
+                        <br />
+                        <b>Default Number of Days:</b> @Html.DisplayFor(model => model.DefaultDays)
+                        <br />
+                        <b>Date Created:</b> @Html.DisplayFor(model => model.DateCreated)
+                    </div>
+                    <div class="timeline-footer">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn bg-olive btn-sm" style="width:100px">Edit</a> 
+                        <a asp-action="Index" class="btn btn-secondary btn-sm float-right">Back to List</a> 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

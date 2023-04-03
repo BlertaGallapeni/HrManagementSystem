@@ -1,9 +1,10 @@
 ﻿
+using HRMS.DataAccess.Repository.IRepository;
 using HRMS.Models;
 using HRMS.Models.Entities;
 using HRMS.Models.ViewModels;
 using HRMS.Utility;
-using HRMSWeb.Areas.Admin.Views.Helpers;
+using HRMSWeb.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,19 +20,34 @@ namespace HRMSWeb.Areas.Admin.Controllers
         private readonly ILogger<HomeController> _logger;
         private IOptions<RequestLocalizationOptions> _options;
         private IHttpContextAccessor _httpContextAccessor;
+        private readonly IUnitOfWork _unitOfWork;
 
         public HomeController(ILogger<HomeController> logger,
                               IOptions<RequestLocalizationOptions> options,
-                              IHttpContextAccessor httpContextAccessor)
+                              IHttpContextAccessor httpContextAccessor,
+                              IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _options = options;
             _httpContextAccessor = httpContextAccessor;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var projects = _unitOfWork.Project.GetAll(x => x.Deleted != true);
+            var employees = _unitOfWork.Employee.GetAll(x => x.Deleted != true);
+            var clients = _unitOfWork.Client.GetAll(x => x.Deleted != true);
+            var tasks = _unitOfWork.Task.GetAll(x => x.Deleted != true);
+
+            var model = new DashboardVM
+            {
+                TotalProjects = projects.Count(),
+                TotalClients = clients.Count(),
+                TotalEmployees = employees.Count(),
+                TotalTasks = tasks.Count(),
+            };
+            return View(model);
         }
         public IActionResult SetLanguage(string culture, string returnUrl)
         {

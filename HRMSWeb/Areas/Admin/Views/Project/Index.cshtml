@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProjectVM>
+﻿@using HRMS.Utility;
+@model IEnumerable<ProjectVM>
 
 
  <!-- Content Header (Page header) -->
@@ -34,11 +35,13 @@
                                     <li class="nav-item text-black-50" active">/ @SharedLocalizer["Projects"]</li>
                                 </ul>
                             </div>
+                            @if (User.IsInRole(SD.Role_Admin)) {
                             <div class="col-auto mx-auto mt-3">
                                 <a class="btn rounded-pill float-right bg-olive" asp-controller="Project" asp-action="Create">
                                     <i class="fas fa-plus"></i> &nbsp; @SharedLocalizer["AddProject"]
                                 </a>
-                            </div>
+                                </div>
+                            }
                         </div>
                     </div>
 
@@ -120,12 +123,12 @@
             "bSearchable": true,
             "bPaginate": true,
             "ordering": true,
-            "order": [[1, 'asc']],
+            "order": [[0, 'asc'],[7, 'asc']],
             //"iDisplayLength": 2,
             //"iDisplayStart" : 2,
             "columns": [
-                    { "data": "name"},
-                    { "data": "projectID" },
+                    { "data": "name", "width": "15%" },
+                    { "data": "projectID","width":"10%" },
                     {
                         "data": null,
                         "sClass": "text-center",
@@ -164,9 +167,8 @@
                             
                             var actions = `
                                      <div style = "text-align:center" >
-                                                                            <a class="btn btn-outline-primary mx-2"  type="button" href="/Admin/Task/Index?projectId=${data.id}" > <i class="bi bi-list-task"></i>
-                                                </a>                                             
-                                                          
+                                             <a class="btn btn-outline-primary mx-2"  type="button" href="/Admin/Task/Index?projectId=${data.id}" > <i class="bi bi-list-task"></i>
+                                                </a>        
                                      </div>`
                             return actions;
                         },
@@ -191,7 +193,7 @@
                             return actions;
 
                         },
-                        "width": "15%"
+                        "width": "12%"
                     },
                     {
                         "data": null,
@@ -209,21 +211,25 @@
                             return actions;
 
                         },
-                        "width": "15%"
+                        "width": "12%"
                     },
+
                     {
                         "data": null,
                         "render": function (data, type, row) {
-                           //console.log(data);
+                         if (data.isTeamLead == true) {
                                 var actions = `
                              <div style = "text-align:center" >                                     
                                     <a type="button" data-toggle="dropdown" aria-expanded="true" > <i class="bi bi-three-dots-vertical"> </i>
                                         </a>
                                         <ul class="dropdown-menu" style = "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
-                                                    <li><a class="dropdown-item" href = "/Admin/Project/Edit?id=${data.id}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["Edit"] </a></li>
-                                                    <li><a class="dropdown-item" href = "" data-toggle="modal" data-target="#modal-delete" onClick=deleteProject(${data.id}) class="btn btn-outline-danger mx-2" > <i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
-                                        </ul>
-                             </div>`
+                                            <li><a class="dropdown-item" href = "/Admin/Project/Edit?id=${data.id}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                            <li><a class="dropdown-item" href = "" data-toggle="modal" data-target="#modal-delete" onClick=deleteProject(${data.id}) class="btn btn-outline-danger mx-2" > <i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
+                                       </ul>
+                             </div>`}
+                             else {
+                                  var actions = ``
+                                 }
                                 return actions;
                         },
                         "width": "5%"

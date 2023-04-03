@@ -112,7 +112,7 @@
                     {
                         "data": null,
                         "render": function (data, type, row) {
-                            console.log(data);
+                            console.log(data.encryptedId);
                             var actions = '<img src="' + data.applicationUserVM.profilePicture.path + '"  class="elevation-2" style="border-radius:50%; width:45px" alt="User Image">&emsp; ' + data.applicationUserVM.fullName
                             return actions;
                         },
@@ -127,14 +127,13 @@
                     {
                         "data": null,
                         "render": function (data, type, row) {
-                            
                                 var actions = `
                              <div style = "text-align:center" >
                                     <a type="button" data-toggle="dropdown" aria-expanded="true" > <i class="bi bi-three-dots-vertical"> </i>
                                         </a>
                                         <ul class="dropdown-menu" style = "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
-                                                    <li><a class="dropdown-item" href = "/Admin/Employee/Edit?id=${data.id}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["Edit"] </a></li>
-                                                    <li><a class="dropdown-item" href = "" data-toggle="modal" data-target="#modal-delete" onClick = deleteEmployee(${data.id}) class="btn btn-outline-danger mx-2" > <i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
+                                                    <li><a class="dropdown-item" href = "/Admin/Employee/Edit?id=${data.encryptedId}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                                            <li><a class="dropdown-item" href = "" data-toggle="modal" data-target="#modal-delete" onClick = deleteEmployee("${data.encryptedId}") class="btn btn-outline-danger mx-2" > <i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
                                         </ul>
                              </div>`
                                 return actions;
@@ -148,8 +147,8 @@
         });
 
     })
-    function deleteEmployee(id) {
-        $.get("/Admin/Employee/Delete", { id: id }, function (result) {
+        function deleteEmployee(encryptedId) {
+        $.get("/Admin/Employee/Delete", { id: encryptedId }, function (result) {
             $(".modal-body").html(result);
         })
     }

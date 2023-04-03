@@ -22,6 +22,11 @@ namespace HRMS.Utility
             .ForMember(x => x.Company, x => x.Ignore())
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
 
+            CreateMap<LeaveType, LeaveTypeVM>().ReverseMap();
+            CreateMap<LeaveRequest, LeaveRequestVM>()
+                .ReverseMap();
+            CreateMap<Leave, LeaveVM>().ReverseMap();
+            CreateMap<Leave, EditLeaveAllocationVM>().ReverseMap();
 
             CreateMap<ApplicationUser, ProfileViewModel>()
                 .ForPath(dest => dest.ApplicationUserVM, opt => opt.MapFrom(src=>src))
@@ -55,6 +60,13 @@ namespace HRMS.Utility
                 .ForMember(dest=>dest.Employee, x=>x.Ignore())
                 .ForMember(dest=>dest.Status, x=>x.Ignore())
                 .ForMember(dest=>dest.Project, x=>x.Ignore());
+           
+            CreateMap<Models.Entities.Task, TaskEmpVM>()
+                .ForMember(dest => dest.StatusName, opt => opt.MapFrom(x => Thread.CurrentThread.CurrentUICulture.Name == SD.Lang_AL ? x.Status.NameAl : x.Status.Name))
+                .ReverseMap()
+                .ForMember(dest => dest.Employee, x => x.Ignore())
+                .ForMember(dest => dest.Status, x => x.Ignore())
+                .ForMember(dest => dest.Project, x => x.Ignore());
 
             CreateMap<Project, ProjectVM>()
                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(x => Thread.CurrentThread.CurrentUICulture.Name == SD.Lang_AL ? x.Status.NameAl : x.Status.Name))

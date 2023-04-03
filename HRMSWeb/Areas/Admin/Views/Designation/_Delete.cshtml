@@ -2,7 +2,7 @@
 
 <form method="post" asp-action="Delete">
     @Html.AntiForgeryToken()
-    <input asp-for="Id" hidden />
+    <input asp-for="EncryptedId" hidden name="Id" />
     <h4>@SharedLocalizer["AreYouSureYouWantToDeleteThisDesignation"]</h4>
         <hr />
         <button type="submit" class="btn btn-danger" style="width:150px">@SharedLocalizer["Delete"]</button>

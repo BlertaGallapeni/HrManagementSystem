@@ -27,6 +27,8 @@ namespace HRMS.Models.ViewModels
         [Required]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+        public DateTime? Birthday { get; set; }
+        public char? Gender { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         [Required]
         public int CompanyId { get; set; }

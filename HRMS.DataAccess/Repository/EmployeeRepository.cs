@@ -18,6 +18,14 @@ namespace HRMS.DataAccess.Repository
         {
             _db = db;
         }
-       
+
+        public bool IsTeamLead(string userId)
+        {
+            return _db.Projects.Any(x=>x.Team.Employee.ApplicationUser.Id== userId);
+        }
+        public bool IsTeamLeadOfProject(string userId, int projectId)
+        {
+            return _db.Projects.Where(x=>x.Id==projectId).Any(x => x.Team.Employee.ApplicationUser.Id == userId);
+        }
     }
 }

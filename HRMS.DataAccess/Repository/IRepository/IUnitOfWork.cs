@@ -21,6 +21,9 @@ namespace HRMS.DataAccess.Repository.IRepository
         IRateTypeRepository RateType { get; }
         ITeamMemberRepository TeamMember { get; }
         ITaskRepository Task { get; }
+        ILeaveRepository Leave { get; }
+        ILeaveRequestRepository LeaveRequest { get; }
+        ILeaveTypeRepository LeaveType { get; }
 
         void Save();
     }

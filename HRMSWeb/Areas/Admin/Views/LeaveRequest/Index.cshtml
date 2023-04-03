@@ -1,0 +1,211 @@
+﻿@model AdminLeaveRequestViewVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<!-- Content Header (Page header) -->
+<style>
+    table.dataTable tbody td {
+        vertical-align: middle;
+    }
+    .col-md-3 {
+    -ms-flex: 0 0 0%;
+    flex: 0 0 5%;
+    }
+</style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+
+    <div class="row mx-auto justify-content-between">
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h1 class="text-center">@Model.TotalRequests</h1>
+                    <h5 class="card-text">@Html.DisplayNameFor(model => model.TotalRequests)</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h1 class="text-center text-warning">@Model.PendingRequests</h1>
+                    <h5 class="card-text">@Html.DisplayNameFor(model => model.PendingRequests)</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h1 class="text-center text-success">@Model.ApprovedRequests</h1>
+                    <h5 class="card-text">@Html.DisplayNameFor(model => model.ApprovedRequests)</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h1 class="text-center text-danger">@Model.RejectedRequests</h1>
+                    <h5 class="card-text">@Html.DisplayNameFor(model => model.RejectedRequests)</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+
+                            <div class="col">
+                                <h2>
+                                    @SharedLocalizer["Leave Requests"]
+                                </h2>
+                                <ul class="nav nav-treeview" style="font-size:18px">
+                                    <li class="nav-item mr-2"><a style="color:black" href="">@SharedLocalizer["Dashboard"]</a></li>
+                                    <li class="nav-item text-black-50" active">/  @SharedLocalizer["Leave Requests"]</li>
+                                </ul>
+                            </div>
+                            <div class="col-auto mx-auto mt-3">
+                                <a class="btn rounded-pill float-right bg-olive" asp-area="Admin" asp-controller="LeaveRequest" asp-action="Create">
+                                    <i class="fas fa-plus"></i> &nbsp;  @SharedLocalizer["Request Leave"]
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblData" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Employee Name</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Leave Type</th>
+                                    <th>Date Requested</th>
+                                    <th>Approval Status</th>
+                                    <th>@SharedLocalizer["Actions"]</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+
+                <div class="modal fade" id="modal-delete" style="display: none; " aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" align="center">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+</section>
+<!-- /.row -->
+@section Scripts {
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.3.0/js/responsive.dataTables.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable({
+                "sAjaxSource": "@Url.Action("GetLeaveRequestsJson","LeaveRequest")",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bPaginate": true,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                //"iDisplayLength": 2,
+                //"iDisplayStart" : 2,
+                "columns": [
+                    { "data": "requestingEmployee.applicationUserVM.fullName" },
+                    { "data": "startDate", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    { "data": "endDate", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    { "data": "leaveType.name" },
+                    { "data": "dateRequested", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    {
+                        "data": null,
+                        "sClass": "text-center",
+                        "render": function (data, type, row) {
+                            var actions = ``;
+                            if (data.approved == true) {
+                                actions += `<span class="badge badge-success">Approved</span>`
+                            }
+                            else if (data.approved == false) {
+                                actions += `<span class="badge badge-danger"> Rejected </span>`
+                            }
+                            else {
+                                actions += `<span class="badge badge-warning"> Pending Approval </span>`
+                            }
+
+                            return actions;
+
+                        },
+                        "width": "15%"
+                    },
+                    {
+                        "data": null,
+                        "sClass": "text-center",
+                        "render": function (data, type, row) {
+                            var actions = `  <a class="btn btn-outline-primary" href="/Admin/LeaveRequest/Details?id=${data.id}">
+                                <i class="fa fa-file"></i> Review
+                            </a>`
+                            return actions;
+                        },
+                       "width": "10%"
+                    }
+
+                ]
+            });
+        })
+
+        function deleteDepartment(id) {
+            $.get("/Admin/Department/Delete", { id: id }, function (result) {
+                $(".modal-body").html(result);
+            })
+        }
+
+    </script>
+}
+
+
+
