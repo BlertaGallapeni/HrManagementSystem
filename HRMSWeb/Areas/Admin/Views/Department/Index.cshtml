@@ -1,0 +1,165 @@
+﻿@model IEnumerable<DepartmentVM>
+<!-- Content Header (Page header) -->
+<style>
+    table.dataTable tbody td {
+        vertical-align: middle;
+    }
+</style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+
+                             <div class="col">
+                                <h2>
+                                    @SharedLocalizer["Department"]
+                                </h2>
+                                <ul class="nav nav-treeview" style="font-size:18px">
+                                    <li class="nav-item mr-2"><a style="color:black" href="">@SharedLocalizer["Dashboard"]</a></li>
+                                    <li class="nav-item text-black-50" active">/  @SharedLocalizer["Department"]</li>
+                                </ul>
+                            </div>
+                            <div class="col-auto mx-auto mt-3">
+                                <a class="btn rounded-pill float-right bg-olive" asp-controller="Department" asp-action="Create">
+                                    <i class="fas fa-plus"></i> &nbsp;  @SharedLocalizer["AddDepartment"]
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblData" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@SharedLocalizer["Name"]</th>
+                                    <th>@SharedLocalizer["Actions"]</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+
+                <div class="modal fade" id="modal-delete" style="display: none; " aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" align="center">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+</section>
+<!-- /.row -->
+@section Scripts {
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.3.0/js/responsive.dataTables.min.js"></script>
+
+
+  <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable({
+                "sAjaxSource": "@Url.Action("GetDepartmentsJson","Department")",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bPaginate": true,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                //"iDisplayLength": 2,
+                //"iDisplayStart" : 2,
+                "columns": [
+                   // { "data": "name", "width": "75%" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            if (data.name != null) {                              
+                                return data.name;
+
+                            } else {
+                               return data.nameAl;
+                            }
+                            
+                        },
+                       
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            if (data.hasEmployee == false) {
+
+                                var actions = `
+                                        <div style="text-align:center">
+                                            <a type="button" data-toggle="dropdown" aria-expanded="true"><i class="bi bi-three-dots-vertical"></i>
+                                             </a>
+                                            <ul class="dropdown-menu" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
+                                                 <li><a class="dropdown-item" href="/Admin/Department/Edit?id=${data.encryptedId}" class="btn btn-outline-primary mx-2"><i class="bi bi-pencil-square text-info"></i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                                                                         <li><a class="dropdown-item" href="" data-toggle="modal" data-target="#modal-delete" onClick=deleteDepartment("${data.encryptedId}") class="btn btn-outline-danger mx-2"><i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
+                                            </ul>
+                                        </div>`
+
+                            } else {
+                                var actions = `
+                                        <div style="text-align:center">
+                                            <a type="button" data-toggle="dropdown" aria-expanded="true"><i class="bi bi-three-dots-vertical"></i>
+                                             </a>
+                                                <ul class="dropdown-menu" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
+                                                                     <li><a class="dropdown-item" href="/Admin/Department/Edit?id=${data.encryptedId}" class="btn btn-outline-primary mx-2"><i class="bi bi-pencil-square text-info"></i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                                </ul>
+                                       </div>`
+                            }
+                            return actions;
+                        },
+                        "width": "5%"
+                    },
+
+
+
+                ]
+            });
+
+        })
+
+        function deleteDepartment(encryptedId) {
+            $.get("/Admin/Department/Delete", { id: encryptedId }, function (result) {
+                $(".modal-body").html(result);
+            })
+        }
+        
+    </script>
+}
+

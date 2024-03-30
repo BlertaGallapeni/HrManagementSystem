@@ -1,0 +1,30 @@
+﻿@model DepartmentVM
+<div class="card card-secondary mx-auto">
+    <div class="card-header">
+        <h3 class="card-title">@SharedLocalizer["AddDepartment"]</h3>
+    </div>
+
+<form id="formdep" method="post" asp-controller="Department" asp-action="Create">
+   @Html.AntiForgeryToken()
+    <div class="card-body row">
+        <div class="mb-3 form-group col-6">
+                <label asp-for="Name"></label><span class="text-danger text-bold">&nbsp;*&nbsp;<i class="flag-icon flag-icon-us mr-2"></i></span>
+            <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="NameAl"></label><span class="text-danger text-bold">&nbsp;*&nbsp;<i class="flag-icon flag-icon-al mr-2"></i></span>
+                <input asp-for="NameAl" class="form-control" />
+                <span asp-validation-for="NameAl" class="text-danger"></span>
+            </div>
+        </div>
+    <div class="modal-footer justify-content-between">
+            <a class="btn btn-secondary" asp-area="Admin" asp-controller="Department" asp-action="Index">@SharedLocalizer["BackToList"]</a>
+            <button type="submit" class="btn bg-olive">@SharedLocalizer["Add"]</button>
+    </div>
+      
+</form>
+</div>
+<partial name="_ValidationScriptsPartial" />
+
+

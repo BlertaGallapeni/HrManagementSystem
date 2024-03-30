@@ -1,0 +1,377 @@
+﻿@model IEnumerable<TaskVM>
+<!-- Content Header (Page header) -->
+@*<style>
+    .card.draggable {
+        margin-bottom: 1rem;
+        cursor: grab;
+    }
+
+    .droppable {
+        background-color: lightgray;
+        min-height: 80px;
+    }
+
+</style>*@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+
+@{
+    var statusId = Context.Request.Query["statusId"];
+    var pending = "text-dark";
+    var inprogress = "text-dark";
+    var completed = "text-dark";
+    var onhold = "text-dark";
+    var review = "text-dark";
+    var all = "text-dark";
+
+    switch (statusId)
+    {
+        case "24":
+            pending = "active text-white";
+            break;
+        case "26":
+            inprogress = "active text-white";
+            break;
+        case "29":
+            completed = "active text-white";
+            break;
+        case "28":
+            review = "active text-white";
+            break;
+        case "27":
+            onhold = "active text-white";
+            break;
+        default:
+            all = "active text-white";
+            break;
+    }
+}
+
+<!-- /.content-header -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h2>
+                                    @SharedLocalizer["Tasks"] of @ViewBag.ProjectName Project
+                                </h2>
+                                <ul class="nav nav-treeview" style="font-size:18px">
+                                    <li class="nav-item mr-2"><a style="color:black" href="">@SharedLocalizer["Dashboard"]</a></li>
+                                    <li class="nav-item text-black-50" active">/ @SharedLocalizer["Tasks"]</li>
+                                </ul>
+                            </div>
+                            <div class="col">
+                                <ul class="list-group list-group-horizontal-sm float-right mr-4">
+                                    <a style="text-decoration:none" asp-controller="Task" asp-action="Index" asp-route-statusId="24" asp-route-projectId="@ViewBag.ProjectId">
+                                    <li class="list-group-item @pending">Pending</li>
+                                    </a>
+                                    <a style="text-decoration:none" asp-controller="Task" asp-action="Index" asp-route-statusId="26" asp-route-projectId="@ViewBag.ProjectId">
+                                    <li class="list-group-item @inprogress">In Progress</li>
+                                    </a>
+                                    <a style="text-decoration:none" asp-controller="Task" asp-action="Index" asp-route-statusId="27" asp-route-projectId="@ViewBag.ProjectId">
+                                    <li class="list-group-item @onhold">On Hold</li>
+                                    </a>
+                                    <a style="text-decoration:none" asp-controller="Task" asp-action="Index" asp-route-statusId="29" asp-route-projectId="@ViewBag.ProjectId">
+                                    <li class="list-group-item @completed">Completed</li>
+                                    </a>
+                                    <a style="text-decoration:none" asp-controller="Task" asp-action="Index" asp-route-statusId="28" asp-route-projectId="@ViewBag.ProjectId">
+                                    <li class="list-group-item @review">Review</li>
+                                    </a>
+                                    <a style="text-decoration:none" asp-controller="Task" asp-action="Index" asp-route-statusId="0" asp-route-projectId="@ViewBag.ProjectId">
+                                    <li class="list-group-item @all">All</li>
+                                    </a>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="tblData" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@SharedLocalizer["Title"]</th>
+                                        <th>@SharedLocalizer["Status"]</th>
+                                        <th>@SharedLocalizer["Actions"]</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+
+
+    <!-- /.container-fluid -->
+</section>
+@*
+<div class="container-fluid pt-3">
+    <h3 class="font-weight-light text-white">Kanban Board</h3>
+    <div class="small  text-light">Drag and drop between swim lanes</div>
+    <div class="row flex-row flex-sm-nowrap py-3">
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card">
+                <div class="card-header bg-gradient-warning"> <h6 class="title text-uppercase text-truncate py-2">PENDING</h6></div>
+
+                <div class="card-body">
+
+                    <div class="items">
+                        <div class="card draggable shadow-md" id="cd1" draggable="true" ondragstart="drag(event)">
+                            <div class="p-2 border accent-gray">
+                                <p>
+                                    This is a description of a item on the board.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card">
+                <div class="card-header bg-gradient-orange">
+                    <h6 class="title text-uppercase text-truncate py-2">In-progess</h6>
+                </div>
+                <div class="card-body">
+                    <div class="items">
+                        <div class="card draggable shadow-sm" id="cd1" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body border accent-gray p-2">
+                                <p>
+                                    This is a task that is being worked on.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card">
+                <div class="card-header bg-gradient-teal"><h6 class="title text-uppercase text-truncate py-2">Review</h6></div>
+
+                <div class="card-body">
+                    <div class="items">
+                        <div class="card draggable shadow-sm" id="cd9" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body border accent-gray p-2">
+
+                                <p class="text-black">
+                                    This is a description of a item on the board.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card">
+                <div class="card-header bg-gradient-green"> <h6 class="title text-uppercase text-truncate py-2">Complete</h6></div>
+
+                <div class="card-body">
+                    <div class="items">
+                        <div class="card draggable shadow-sm" id="cd11" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body border accent-gray p-2">
+                                <p>
+                                    This is a description of an item.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        <div class="carddraggable shadow-sm" id="cd12" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body border accent-gray p-2">
+                                <p>
+                                    This is a description of a task item.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+*@
+
+
+
+@section Scripts {
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.3.0/js/responsive.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var url = window.location.search;
+            console.log(url);
+            if (url.includes("statusId=26")) {
+                loadDataTable("26");
+            }
+            else {
+                if (url.includes("statusId=29")) {
+                    loadDataTable("29");
+                }
+                else {
+                    if (url.includes("statusId=27")) {
+                        loadDataTable("27");
+                    }
+
+                    else {
+                        if (url.includes("statusId=24")) {
+                            loadDataTable("24");
+                        }
+                        else {
+                            if (url.includes("statusId=28")) {
+                                loadDataTable("28");
+                            }
+                            else {
+                                loadDataTable("0");
+                            }
+                        }
+                    }
+                }
+            }
+
+        })
+
+        function loadDataTable(statuss) {
+            console.log(statuss);
+            $('#tblData').DataTable({
+                "sAjaxSource": '@Url.Action("GetEmpTasksJson","Task")' + '?projectId=' + @ViewBag.ProjectId+'&statusId=' + statuss,
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bPaginate": true,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                "iDisplayLength": 6,
+                //"iDisplayStart" : 2,
+                "columns": [
+                    { "data": "name" },
+                    { "data": "statusName" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+
+                            var actions = `
+                                                <div style = "text-align:center" >
+                                                    <a type="button" data-toggle="dropdown" aria-expanded="true" > <i class="bi bi-three-dots-vertical"> </i>
+                                                        </a>
+                                                        <ul class="dropdown-menu" style = "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
+                                                                    <li><a class="dropdown-item" href="/Admin/Task/EditEmpTask?id=${data.id}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+
+                                                        </ul>
+                                                </div>`
+                            return actions;
+                        },
+                        "width": "5%"
+                    }
+
+                ]
+            });
+        }
+        //const drag = (event) => {
+        //    event.dataTransfer.setData("text/plain", event.target.id);
+        //}
+
+        //const allowDrop = (ev) => {
+        //    ev.preventDefault();
+        //    if (hasClass(ev.target, "dropzone")) {
+        //        addClass(ev.target, "droppable");
+        //    }
+        //}
+
+        //const clearDrop = (ev) => {
+        //    removeClass(ev.target, "droppable");
+        //}
+
+        //const drop = (event) => {
+        //    event.preventDefault();
+        //    const data = event.dataTransfer.getData("text/plain");
+        //    const element = document.querySelector(`#${data}`);
+        //    try {
+        //        // remove the spacer content from dropzone
+        //        event.target.removeChild(event.target.firstChild);
+        //        // add the draggable content
+        //        event.target.appendChild(element);
+        //        // remove the dropzone parent
+        //        unwrap(event.target);
+        //    } catch (error) {
+        //        console.warn("can't move the item to the same place")
+        //    }
+        //    updateDropzones();
+        //}
+
+        //const updateDropzones = () => {
+        //    /* after dropping, refresh the drop target areas
+        //      so there is a dropzone after each item
+        //      using jQuery here for simplicity */
+
+        //    var dz = $('<div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>');
+
+        //    // delete old dropzones
+        //    $('.dropzone').remove();
+
+        //    // insert new dropdzone after each item
+        //    dz.insertAfter('.card.draggable');
+
+        //    // insert new dropzone in any empty swimlanes
+        //    $(".items:not(:has(.card.draggable))").append(dz);
+        //};
+
+        //// helpers
+        //function hasClass(target, className) {
+        //    return new RegExp('(\\s|^)' + className + '(\\s|$)').test(target.className);
+        //}
+
+        //function addClass(ele, cls) {
+        //    if (!hasClass(ele, cls)) ele.className += " " + cls;
+        //}
+
+        //function removeClass(ele, cls) {
+        //    if (hasClass(ele, cls)) {
+        //        var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+        //        ele.className = ele.className.replace(reg, ' ');
+        //    }
+        //}
+
+        //function unwrap(node) {
+        //    node.replaceWith(...node.childNodes);
+        //}
+
+
+
+
+    </script>
+}
+

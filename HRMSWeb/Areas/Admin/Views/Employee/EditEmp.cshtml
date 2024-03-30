@@ -1,0 +1,629 @@
+﻿@model EmployeeVM
+@{
+    var extensionsAll = "jpeg, jpg, png";
+    var extensions = extensionsAll.Split(",").Select(x => x.Trim()).ToArray();
+}
+@section Styles {
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+
+
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="card card-secondary mx-auto mt-4">
+    <div class="card-header">
+        <h3 class="card-title">@SharedLocalizer["EditEmployee"]</h3>
+    </div>
+
+    <form method="post" asp-controller="Employee" asp-action="Edit" enctype="multipart/form-data">
+        <input asp-for="EncryptedId" type="hidden"/>
+        <input asp-for="ApplicationUserVM.Id" type="hidden" />
+        <input asp-for="ApplicationUserVM.ProfilePicture.Path" type="hidden" />
+        <input asp-for="ApplicationUserVM.ProfilePicture.Name" type="hidden" />
+        <input asp-for="ApplicationUserVM.ProfilePicture.Id" type="hidden" />
+        <div class="card-body row">
+
+            <div class="mb-3 form-group col-6">
+                <label asp-for="ApplicationUserVM.FirstName">@SharedLocalizer["FirstName"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <input asp-for="ApplicationUserVM.FirstName" class="form-control" />
+                <span asp-validation-for="ApplicationUserVM.FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="ApplicationUserVM.LastName">@SharedLocalizer["LastName"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <input asp-for="ApplicationUserVM.LastName" class="form-control" />
+                <span asp-validation-for="ApplicationUserVM.LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="ApplicationUserVM.Email">@SharedLocalizer["Email"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <input asp-for="ApplicationUserVM.Email" class="form-control" />
+                <span asp-validation-for="ApplicationUserVM.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <div class="form-group">
+                    <label>@SharedLocalizer["Birthday"]</label>
+                    <div class="input-group date" id="startD">
+                        <input type="text" asp-for="ApplicationUserVM.Birthday" readonly id="birthdatePicker" class="form-control help-sidebar" data-title="@SharedLocalizer["ScheduleStartTimeTitle"]" data-description="@SharedLocalizer["ScheduleStartTimeDescription"]" placeholder="" />
+                        <div class="input-group-append ">
+                            <span class="input-group-text"><i id="sCalendar" class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mb-3 form-group col-3">
+                <label asp-for="ApplicationUserVM.Gender">@SharedLocalizer["Gender"]</label>
+                <select asp-for="ApplicationUserVM.Gender" asp-items="@ViewBag.Gender" class="form-control">
+                </select>
+            </div>
+            <div class="mb-3 form-group col-3">
+                <label asp-for="ApplicationUserVM.PersonalNumber">@SharedLocalizer["PersonalNumber"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <input asp-for="ApplicationUserVM.PersonalNumber" class="form-control" />
+                <span asp-validation-for="ApplicationUserVM.PersonalNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-3">
+                <label asp-for="ApplicationUserVM.PhoneNumber">@SharedLocalizer["Phone"]</label>
+                <input asp-for="ApplicationUserVM.PhoneNumber" class="form-control" />
+                <span asp-validation-for="ApplicationUserVM.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-2">
+                <label asp-for="Country">@SharedLocalizer["Country"]</label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-2">
+                <label asp-for="City">@SharedLocalizer["City"]</label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-2">
+                <label asp-for="Address">@SharedLocalizer["Address"]</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-3">
+                <label asp-for="EmployeeID">@SharedLocalizer["EmployeeID"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <input asp-for="EmployeeID" class="form-control" />
+                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-3">
+                <label asp-for="ApplicationUserVM.CompanyId">@SharedLocalizer["Company"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <select asp-for="ApplicationUserVM.CompanyId" id="selectCompany" class="custom-select rounded-0">
+                </select>
+                <span asp-validation-for="ApplicationUserVM.CompanyId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-group col-3">
+                <label asp-for="DepartmentId">@SharedLocalizer["Department"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <select asp-for="DepartmentId" id="selectDepartment" class="custom-select rounded-0">
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-group col-3">
+                <label asp-for="DesignationId">@SharedLocalizer["Designation"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <select asp-for="DesignationId" id="selectDesignation" class="custom-select rounded-0">
+                </select>
+                <span asp-validation-for="DesignationId" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>@SharedLocalizer["ProfilePicture"]</label>
+                    <div class="custom-file">
+                        <div class="help-sidebar" data-title="@SharedLocalizer["UserProfilePictureTitle"]" data-description="@SharedLocalizer["UserProfilePictureDescription"]">
+                            <input id="file" name="file" type="file" accept="image/*" data-msg-placeholder="@SharedLocalizer["SelectProfilePicture"]" class="input-sm validate-upload" />
+                        </div>
+                    </div>
+                    <label><small>.jpg | 5mb max</small></label>
+                </div>
+            </div>
+       </div>
+
+            <div class="modal-footer justify-content-between">
+            <a asp-controller="Employee" asp-action="Index" class="btn btn-secondary" style="width:150px">@SharedLocalizer["BackToList"]</a>
+            <button type="submit" class="btn bg-olive" style="width:150px">@SharedLocalizer["Update"]</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#selectCompany').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: "/Admin/Employee/GetCompany",
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id,
+                                }
+                            })
+                        };
+                    }
+                },
+                placeholder: '--Select Company--',
+                // minimumInputLength: 1
+            });
+            if ('@Model.Id' != '0') {
+                var newOption = new Option('@Model.ApplicationUserVM.CompanyName', '@Model.ApplicationUserVM.CompanyId', null, true);
+                $("#selectCompany").append(newOption).trigger('change');
+            }
+
+            $('#selectDesignation').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetDesignation","Designation")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.key,
+                                }
+                            })
+                        };
+                    }
+                },
+                placeholder: '--Select Designation--',
+                // minimumInputLength: 1
+            });
+            if ('@Model.Id' != '0') {
+                var newOption = new Option('@Model.DesignationName', '@Model.DesignationId', null, true);
+                $("#selectDesignation").append(newOption).trigger('change');
+            }
+
+
+
+            $('#selectDepartment').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetDepartment","Department")',
+
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.key,
+                                }
+                            })
+                        };
+                    }
+                },
+                placeholder: '--Select Department--',
+                // minimumInputLength: 1
+            });
+            if ('@Model.Id' != '0') {
+                var newOption = new Option('@Model.DepartmentName', '@Model.DepartmentId', null, true);
+                $("#selectDepartment").append(newOption).trigger('change');
+            }
+
+
+            if ('@Model.Id' == null) {
+                //Image upload validation
+                var uploadExtensions = @Html.Raw(Json.Serialize(extensions));
+                var maxUpload = 2048;
+                $("#file").change(function () {
+                    var allowed_extensions = uploadExtensions;
+                    var valid = new Array();
+
+                    for (var x = 0; x < $(this).get(0).files.length; x++) {
+                        valid[x] = false;
+                        for (var i = 0; i <= allowed_extensions.length; i++) {
+                            var file_extension = $(this).get(0).files[x].name.split(".").pop().toLowerCase();
+                            if (allowed_extensions[i] == file_extension) {
+                                valid[x] = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (valid.every(x => x == true)) {
+                        toastr.success('@SharedLocalizer["ImageUploaded"]');
+                    } else {
+                        $(this).val("");
+                        toastr.error("@SharedLocalizer["ChooseOnlyPhoto"]");
+                    }
+                });
+
+                $("#file").fileinput({
+                    theme: "fa",
+                    showZoom: false,
+                    browseOnZoneClick: true,
+                    resizeImage: true,
+                    resizeImageQuality: 0.3,
+                    showRemove: true,
+                    showUpload: false,
+                    showBrowse: true,
+                    showCancel: false,
+                    dropZoneEnabled: false,
+                    maxFileSize: maxUpload,
+                    allowedFileExtensions: uploadExtensions,
+                    initialPreviewAsData: true,
+                    fileActionSettings: {
+                        showRemove: true,
+                    },
+                    //Translation
+                    fileSingle: '@SharedLocalizer["fileSingle"]',
+                    filePlural: '@SharedLocalizer["filePlural"]',
+                    browseLabel: '@SharedLocalizer["browseLabel"]',
+                    removeLabel: '@SharedLocalizer["removeLabel"]',
+                    removeTitle: '@SharedLocalizer["removeTitle"]',
+                    cancelLabel: '@SharedLocalizer["cancelLabel"]',
+                    cancelTitle: '@SharedLocalizer["cancelTitle"]',
+                    pauseLabel: '@SharedLocalizer["pauseLabel"]',
+                    pauseTitle: '@SharedLocalizer["pauseTitle"]',
+                    uploadLabel: '@SharedLocalizer["uploadLabel"]',
+                    uploadTitle: '@SharedLocalizer["uploadTitle"]',
+                    msgNo: '@SharedLocalizer["msgNo"]',
+                    msgNoFilesSelected: '@SharedLocalizer["msgNoFilesSelected"]',
+                    msgPaused: '@SharedLocalizer["msgPaused"]',
+                    msgCancelled: '@SharedLocalizer["msgCancelled"]',
+                    msgPlaceholder: '@SharedLocalizer["msgPlaceholder"]',
+                    msgZoomModalHeading: '@SharedLocalizer["msgZoomModalHeading"]',
+                    msgFileRequired: '@SharedLocalizer["msgFileRequired"]',
+                    msgSizeTooSmall: '@SharedLocalizer["msgSizeTooSmall"]',
+                    msgSizeTooLarge: '@SharedLocalizer["msgSizeTooLarge"]',
+                    msgFilesTooLess: '@SharedLocalizer["msgFilesTooLess"]',
+                    msgFilesTooMany: '@SharedLocalizer["msgFilesTooMany"]',
+                    msgTotalFilesTooMany: '@SharedLocalizer["msgTotalFilesTooMany"]',
+                    msgFileNotFound: '@SharedLocalizer["msgFileNotFound"]',
+                    msgFileSecured: '@SharedLocalizer["msgFileSecured"]',
+                    msgFileNotReadable: '@SharedLocalizer["msgFileNotReadable"]',
+                    msgFilePreviewAborted: '@SharedLocalizer["msgFilePreviewAborted"]',
+                    msgFilePreviewError: '@SharedLocalizer["msgFilePreviewError"]',
+                    msgInvalidFileName: '@SharedLocalizer["msgInvalidFileName"].',
+                    msgInvalidFileType: '@SharedLocalizer["msgInvalidFileType"]',
+                    msgInvalidFileExtension: '@SharedLocalizer["msgInvalidFileExtension"]',
+                    msgFileTypes: {
+                        'image': '@SharedLocalizer["imagee"]',
+                        'html': 'HTML',
+                        'text': '@SharedLocalizer["text"]',
+                        'video': 'video',
+                        'audio': 'audio',
+                        'flash': 'flash',
+                        'pdf': 'PDF',
+                        'object': '@SharedLocalizer["object"]'
+                    },
+                    msgUploadAborted: '@SharedLocalizer["msgUploadAborted"]',
+                    msgUploadThreshold: '@SharedLocalizer["msgUploadThreshold"]',
+                    msgUploadBegin: '@SharedLocalizer["msgUploadBegin"]',
+                    msgUploadEnd: '@SharedLocalizer["msgUploadEnd"]',
+                    msgUploadResume: '@SharedLocalizer["msgUploadResume"]',
+                    msgUploadEmpty: '@SharedLocalizer["msgUploadEmpty"]',
+                    msgUploadError: '@SharedLocalizer["msgUploadError"]',
+                    msgDeleteError: '@SharedLocalizer["msgDeleteError"]',
+                    msgProgressError: '@SharedLocalizer["msgProgressError"]',
+                    msgValidationError: '@SharedLocalizer["msgValidationError"]',
+                    msgLoading: '@SharedLocalizer["msgLoading"]',
+                    msgProgress: '@SharedLocalizer["msgProgress"]',
+                    msgSelected: '@SharedLocalizer["msgSelected"]',
+                    msgFoldersNotAllowed: '@SharedLocalizer["msgFoldersNotAllowed"]',
+                    msgImageWidthSmall: '@SharedLocalizer["msgImageWidthSmall"]',
+                    msgImageHeightSmall: '@SharedLocalizer["msgImageHeightSmall"]',
+                    msgImageWidthLarge: '@SharedLocalizer["msgImageWidthLarge"]',
+                    msgImageHeightLarge: '@SharedLocalizer["msgImageHeightLarge"]',
+                    msgImageResizeError: '@SharedLocalizer["msgImageResizeError"]',
+                    msgImageResizeException: '@SharedLocalizer["msgImageResizeException"]>',
+                    msgAjaxError: '@SharedLocalizer["msgAjaxError"]',
+                    msgAjaxProgressError: '@SharedLocalizer["msgAjaxProgressError"]',
+                    msgDuplicateFile: '@SharedLocalizer["msgDuplicateFile"]',
+                    msgResumableUploadRetriesExceeded: '@SharedLocalizer["msgResumableUploadRetriesExceeded"]',
+                    msgPendingTime: '@SharedLocalizer["msgPendingTime"]',
+                    msgCalculatingTime: '@SharedLocalizer["msgCalculatingTime"]',
+                    ajaxOperations: {
+                        deleteThumb: '@SharedLocalizer["deleteThumb"]',
+                        uploadThumb: '@SharedLocalizer["uploadThumb"]',
+                        uploadBatch: '@SharedLocalizer["uploadBatch"]',
+                        uploadExtra: '@SharedLocalizer["uploadExtra"]'
+                    },
+                    dropZoneTitle: '@SharedLocalizer["dropZoneTitle"]',
+                    dropZoneClickTitle: '@SharedLocalizer["dropZoneClickTitle"]',
+                    fileActionSettings: {
+                        removeTitle: '@SharedLocalizer["removeTitle"]',
+                        uploadTitle: '@SharedLocalizer["uploadTitle"]',
+                        uploadRetryTitle: '@SharedLocalizer["uploadRetryTitle"]',
+                        downloadTitle: '@SharedLocalizer["downloadTitle"]',
+                        zoomTitle: '@SharedLocalizer["zoomTitle"]',
+                        dragTitle: '@SharedLocalizer["dragTitle"]',
+                        indicatorNewTitle: '@SharedLocalizer["indicatorNewTitle"]',
+                        indicatorSuccessTitle: '@SharedLocalizer["indicatorSuccessTitle"]',
+                        indicatorErrorTitle: '@SharedLocalizer["indicatorErrorTitle"]',
+                        indicatorPausedTitle: '@SharedLocalizer["indicatorPausedTitle"]',
+                        indicatorLoadingTitle: '@SharedLocalizer["indicatorLoadingTitle"]'
+                    },
+                    previewZoomButtonTitles: {
+                        prev: '@SharedLocalizer["Fprev"]',
+                        next: '@SharedLocalizer["Fnext"]',
+                        toggleheader: '@SharedLocalizer["Ftoggleheader"]',
+                        fullscreen: '@SharedLocalizer["Ffullscreen"]',
+                        borderless: '@SharedLocalizer["Fborderless"]',
+                        close: '@SharedLocalizer["Fclose"]'
+                    }
+                    // End Translation
+                });
+
+            }
+            else {
+                debugger;
+                var previewImageThumbnail = [];
+                var initialPreviewConfigThumbnail = [];
+        @if (Model.ApplicationUserVM.ProfilePicture.Path != null)
+        {
+            @:previewImageThumbnail.push('@Url.Content(Model.ApplicationUserVM.ProfilePicture.Path)');
+            @:initialPreviewConfigThumbnail.push({ caption: "@Model.ApplicationUserVM.ProfilePicture.Name", size: 762980, url: "@Url.Action("DeleteImage", new { id = Model.ApplicationUserVM.ProfilePicture.Id })", key: "@Model.ApplicationUserVM.ProfilePicture.Id" });
+        }
+
+                    $("#file").fileinput({
+                        overwriteInitial: true,//server upload action
+                        theme: "fa",
+                        overwriteInitial: true,
+                        showZoom: false,
+                        browseOnZoneClick: true,
+                        resizeImage: true,
+                        maxFileSize: maxUpload,
+                        allowedFileExtensions: uploadExtensions,
+                        resizeImageQuality: 0.3,
+                        showRemove: true,
+                        showUpload: false,
+                        showBrowse: true,
+                        showCancel: false,
+                        dropZoneEnabled: false,
+                        initialPreview: previewImageThumbnail,
+                        initialPreviewAsData: true,
+                        initialPreviewConfig: initialPreviewConfigThumbnail,
+                        fileActionSettings: {
+                            showRemove: true,
+                        },
+                        //Translation
+                        fileSingle: '@SharedLocalizer["fileSingle"]',
+                        filePlural: '@SharedLocalizer["filePlural"]',
+                        browseLabel: '@SharedLocalizer["browseLabel"]',
+                        removeLabel: '@SharedLocalizer["removeLabel"]',
+                        removeTitle: '@SharedLocalizer["removeTitle"]',
+                        cancelLabel: '@SharedLocalizer["cancelLabel"]',
+                        cancelTitle: '@SharedLocalizer["cancelTitle"]',
+                        pauseLabel: '@SharedLocalizer["pauseLabel"]',
+                        pauseTitle: '@SharedLocalizer["pauseTitle"]',
+                        uploadLabel: '@SharedLocalizer["uploadLabel"]',
+                        uploadTitle: '@SharedLocalizer["uploadTitle"]',
+                        msgNo: '@SharedLocalizer["msgNo"]',
+                        msgNoFilesSelected: '@SharedLocalizer["msgNoFilesSelected"]',
+                        msgPaused: '@SharedLocalizer["msgPaused"]',
+                        msgCancelled: '@SharedLocalizer["msgCancelled"]',
+                        msgPlaceholder: '@SharedLocalizer["msgPlaceholder"]',
+                        msgZoomModalHeading: '@SharedLocalizer["msgZoomModalHeading"]',
+                        msgFileRequired: '@SharedLocalizer["msgFileRequired"]',
+                        msgSizeTooSmall: '@SharedLocalizer["msgSizeTooSmall"]',
+                        msgSizeTooLarge: '@SharedLocalizer["msgSizeTooLarge"]',
+                        msgFilesTooLess: '@SharedLocalizer["msgFilesTooLess"]',
+                        msgFilesTooMany: '@SharedLocalizer["msgFilesTooMany"]',
+                        msgTotalFilesTooMany: '@SharedLocalizer["msgTotalFilesTooMany"]',
+                        msgFileNotFound: '@SharedLocalizer["msgFileNotFound"]',
+                        msgFileSecured: '@SharedLocalizer["msgFileSecured"]',
+                        msgFileNotReadable: '@SharedLocalizer["msgFileNotReadable"]',
+                        msgFilePreviewAborted: '@SharedLocalizer["msgFilePreviewAborted"]',
+                        msgFilePreviewError: '@SharedLocalizer["msgFilePreviewError"]',
+                        msgInvalidFileName: '@SharedLocalizer["msgInvalidFileName"].',
+                        msgInvalidFileType: '@SharedLocalizer["msgInvalidFileType"]',
+                        msgInvalidFileExtension: '@SharedLocalizer["msgInvalidFileExtension"]',
+                        msgFileTypes: {
+                            'image': '@SharedLocalizer["imagee"]',
+                            'html': 'HTML',
+                            'text': '@SharedLocalizer["text"]',
+                            'video': 'video',
+                            'audio': 'audio',
+                            'flash': 'flash',
+                            'pdf': 'PDF',
+                            'object': '@SharedLocalizer["object"]'
+                        },
+                        msgUploadAborted: '@SharedLocalizer["msgUploadAborted"]',
+                        msgUploadThreshold: '@SharedLocalizer["msgUploadThreshold"]',
+                        msgUploadBegin: '@SharedLocalizer["msgUploadBegin"]',
+                        msgUploadEnd: '@SharedLocalizer["msgUploadEnd"]',
+                        msgUploadResume: '@SharedLocalizer["msgUploadResume"]',
+                        msgUploadEmpty: '@SharedLocalizer["msgUploadEmpty"]',
+                        msgUploadError: '@SharedLocalizer["msgUploadError"]',
+                        msgDeleteError: '@SharedLocalizer["msgDeleteError"]',
+                        msgProgressError: '@SharedLocalizer["msgProgressError"]',
+                        msgValidationError: '@SharedLocalizer["msgValidationError"]',
+                        msgLoading: '@SharedLocalizer["msgLoading"]',
+                        msgProgress: '@SharedLocalizer["msgProgress"]',
+                        msgSelected: '@SharedLocalizer["msgSelected"]',
+                        msgFoldersNotAllowed: '@SharedLocalizer["msgFoldersNotAllowed"]',
+                        msgImageWidthSmall: '@SharedLocalizer["msgImageWidthSmall"]',
+                        msgImageHeightSmall: '@SharedLocalizer["msgImageHeightSmall"]',
+                        msgImageWidthLarge: '@SharedLocalizer["msgImageWidthLarge"]',
+                        msgImageHeightLarge: '@SharedLocalizer["msgImageHeightLarge"]',
+                        msgImageResizeError: '@SharedLocalizer["msgImageResizeError"]',
+                        msgImageResizeException: '@SharedLocalizer["msgImageResizeException"]>',
+                        msgAjaxError: '@SharedLocalizer["msgAjaxError"]',
+                        msgAjaxProgressError: '@SharedLocalizer["msgAjaxProgressError"]',
+                        msgDuplicateFile: '@SharedLocalizer["msgDuplicateFile"]',
+                        msgResumableUploadRetriesExceeded: '@SharedLocalizer["msgResumableUploadRetriesExceeded"]',
+                        msgPendingTime: '@SharedLocalizer["msgPendingTime"]',
+                        msgCalculatingTime: '@SharedLocalizer["msgCalculatingTime"]',
+                        ajaxOperations: {
+                            deleteThumb: '@SharedLocalizer["deleteThumb"]',
+                            uploadThumb: '@SharedLocalizer["uploadThumb"]',
+                            uploadBatch: '@SharedLocalizer["uploadBatch"]',
+                            uploadExtra: '@SharedLocalizer["uploadExtra"]'
+                        },
+                        dropZoneTitle: '@SharedLocalizer["dropZoneTitle"]',
+                        dropZoneClickTitle: '@SharedLocalizer["dropZoneClickTitle"]',
+                        fileActionSettings: {
+                            removeTitle: '@SharedLocalizer["removeTitle"]',
+                            uploadTitle: '@SharedLocalizer["uploadTitle"]',
+                            uploadRetryTitle: '@SharedLocalizer["uploadRetryTitle"]',
+                            downloadTitle: '@SharedLocalizer["downloadTitle"]',
+                            zoomTitle: '@SharedLocalizer["zoomTitle"]',
+                            dragTitle: '@SharedLocalizer["dragTitle"]',
+                            indicatorNewTitle: '@SharedLocalizer["indicatorNewTitle"]',
+                            indicatorSuccessTitle: '@SharedLocalizer["indicatorSuccessTitle"]',
+                            indicatorErrorTitle: '@SharedLocalizer["indicatorErrorTitle"]',
+                            indicatorPausedTitle: '@SharedLocalizer["indicatorPausedTitle"]',
+                            indicatorLoadingTitle: '@SharedLocalizer["indicatorLoadingTitle"]'
+                        },
+                        previewZoomButtonTitles: {
+                            prev: '@SharedLocalizer["Fprev"]',
+                            next: '@SharedLocalizer["Fnext"]',
+                            toggleheader: '@SharedLocalizer["Ftoggleheader"]',
+                            fullscreen: '@SharedLocalizer["Ffullscreen"]',
+                            borderless: '@SharedLocalizer["Fborderless"]',
+                            close: '@SharedLocalizer["Fclose"]'
+                        }
+                        // End Translation
+                    });
+
+                $("#Images").on('filebeforedelete', function () {
+                    return new Promise(function (resolve, reject) {
+                        $.confirm({
+                            title: '@SharedLocalizer["Confirm"]',
+                            content: '@SharedLocalizer["DeleteDocumentConfirmation"]?',
+                            type: 'red',
+                            buttons: {
+                                ok: {
+                                    btnClass: 'btn-primary text-white',
+                                    keys: ['enter'],
+                                    action: function () {
+                                        resolve();
+                                    }
+                                },
+                                cancel: function () {
+                                    reject();
+                                    //$.alert('File deletion was aborted! ');
+                                }
+                            }
+                        });
+                    });
+                }).on('filesuccessremove', function (event, id, jqXHR) {
+                    var abort = false;
+                    if (confirm("@SharedLocalizer["DeleteDocumentConfirmation"]?")) {
+                        abort = true;
+                    }
+                    return abort;
+                });
+            }
+            // Date range picker
+            $('#birthdatePicker').datepicker({
+                format: 'dd/mm/yyyy',
+                pickTime: false,
+                autoclose: true,
+                startView: 'month',
+                orientation: "bottom"
+            });
+
+
+            $('#sCalendar').on('click', function () {
+                $('#birthdatePicker').trigger('focus');
+            });
+
+        })
+       
+        
+    </script>
+
+    <script>
+        $(function () {
+           
+            if (localStorage.isHelpVisible == 'true') {
+                Close();
+            }
+            else {
+                Open();
+            }
+
+            $(window).scroll(function () {
+                $("#right-sidebar").css("margin-top", Math.max(0, $(this).scrollTop() - 112));
+            });
+        });
+
+        $(".help-sidebar").click(function () {
+           
+            var event = $(this);
+            //var title = event.attr("data-title");
+            //var description = event.attr("data-description");
+            var title = $(this).attr("data-title");
+            var description = $(this).attr("data-description");
+            HelpSideBar(title, description);
+
+        });
+        //Function that fill help right side bar
+        function HelpSideBar(title, description) {
+            
+            $("#title").text(title);
+            $("#description").text(description);
+        }
+        /* BEGIN EXTERNAL SOURCE */
+        $("#close").click(function () {
+            
+            if ($("#right-sidebar").is(':visible')) {
+                Open();
+            }
+            else {
+                Close();
+            }
+        });
+
+        function Open() {
+        
+            var option = { direction: 'right' };
+            $("#right-sidebar").hide();
+            $("#left-side-bar").removeClass("col-md-9");
+            $("#left-side-bar").addClass("col-md-12");
+
+            $("#icon-expand").removeClass("fa-chevron-right");
+            $("#icon-expand").addClass("fa-chevron-left");
+            $("#expand").html("@SharedLocalizer["OpenHelp"]");
+
+            localStorage.isHelpVisible = false;
+        }
+        function Close() {
+         
+            $("#left-side-bar").removeClass("col-md-12");
+            $("#left-side-bar").addClass("col-md-9");
+            var option = { direction: 'right' };
+            $("#right-sidebar").show();
+            $("#icon-expand").removeClass("fa-chevron-left");
+            $("#icon-expand").addClass("fa-chevron-right");
+            $("#expand").html("@SharedLocalizer["CloseHelp"]");
+
+            localStorage.isHelpVisible = true;
+        }
+    </script>
+}

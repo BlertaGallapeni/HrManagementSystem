@@ -1,0 +1,13 @@
+﻿@model EmployeeVM
+
+<form method="post" asp-action="Delete">
+    @Html.AntiForgeryToken()
+    <input asp-for="EncryptedId" hidden name="Id"/>
+
+    <h4>@SharedLocalizer["AreYouSureYouWantToDeleteThisEmployee"]</h4>
+        <hr />
+        <button type="submit" class="btn btn-danger" style="width:150px">@SharedLocalizer["Delete"]</button>
+        <a asp-controller="Employee" asp-action="Index" class="btn btn-secondary" style="width:150px">@SharedLocalizer["Cancel"]</a>
+</form>
+
+<partial name="_ValidationScriptsPartial" />

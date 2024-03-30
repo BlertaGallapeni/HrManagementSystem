@@ -1,0 +1,191 @@
+﻿@model CreateLeaveRequestVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: dimgrey !important;
+    }
+</style>
+@section Styles{
+@*    <link href="~/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="card card-secondary mx-auto">
+    <div class="card-header">
+        <h3 class="card-title">Request Leave</h3>
+    </div>
+    <div asp-validation-summary="All" class="text-danger mt-2"></div>
+    <form id="formdep" method="post" asp-controller="LeaveRequest" asp-action="Create" enctype="multipart/form-data">
+        <div class="card-body row">
+            <div class="mb-3 form-group col-4">
+                <label asp-for="LeaveTypeId">@SharedLocalizer["Leave Type"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <select asp-for="LeaveTypeId" id="selectLeaveType" class="form-control select2bs4 select2-hidden-accessible"
+                        style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                </select>
+                <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+            </div>@*
+            <div class="form-group">
+                <label asp-for="LeaveTypeId" class="control-label"></label>
+                @Html.DropDownListFor(q => q.LeaveTypeId, new SelectList(Model.LeaveTypes, "Value", "Text"),"Select Leave Type", new { @class = "form-control" })
+                <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group col-4">
+                <div class="form-group">
+                    <label>@SharedLocalizer["StartDate"]</label>
+                    <div class="input-group date" id="startD">
+                        <input type="text" asp-for="StartDate" readonly id="StartTimePicker" class="form-control help-sidebar" data-title="@SharedLocalizer["ScheduleStartTimeTitle"]" data-description="@SharedLocalizer["ScheduleStartTimeDescription"]" placeholder="" />
+                        <div class="input-group-append ">
+                            <span class="input-group-text"><i id="sCalendar" class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group col-4">
+                <div class="form-group">
+                    <label>@SharedLocalizer["EndDate"]</label>
+                    <div class="input-group date" id="startD">
+                        <input type="text" asp-for="EndDate" readonly id="EndTimePicker" class="form-control help-sidebar" data-title="@SharedLocalizer["ScheduleStartTimeTitle"]" data-description="@SharedLocalizer["ScheduleStartTimeDescription"]" placeholder="" />
+                        <div class="input-group-append ">
+                            <span class="input-group-text"><i id="sCalendar" class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+             <div class="col-sm-12">
+                <div class="form-group">
+                    <label>@SharedLocalizer["Comment"]</label>
+                    <div class="mb-3">
+                        <div class="help-sidebar" data-title="@SharedLocalizer["Comment"]" data-description="@SharedLocalizer["DescriptionDescription"]">
+                            <textarea class="textarea" id="description" asp-for="RequestComments" placeholder="@SharedLocalizer["EnterDescription"]"
+                            style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+        </div>
+
+        <div class="modal-footer justify-content-between">
+            <a asp-controller="LeaveRequest" asp-action="MyLeave" class="btn btn-secondary" style="width:150px">@SharedLocalizer["BackToList"]</a>
+            <button type="submit" class="btn bg-olive" value="Request Leave" style="width:150px">@SharedLocalizer["Add"]</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+@*    <script src="~/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#selectLeaveType').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+                    url: '@Url.Action("GetAllLeaveTypes","LeaveRequest")',
+                    processResults: function (data) {
+                                console.log(data);
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id,
+                                }
+                            })
+                        };
+                    }
+                },
+                // minimumInputLength: 1
+                placeholder: '--Select Leave Type--',
+            });
+
+
+            // Date range picker
+            $('#StartTimePicker').datepicker({
+                format: 'dd/mm/yyyy',
+                pickTime: false,
+                autoclose: true,
+                startDate: new Date(),
+                startView: 'month',
+                orientation: "bottom",
+            }).on('changeDate', function (selected) {
+                var startDate = new Date(selected.date.valueOf());
+                $('#EndTimePicker').datetimepicker('setStartDate', startDate);
+                $(this).valid();
+            }).on('clearDate', function (selected) {
+                $('#EndTimePicker').datetimepicker('setStartDate', null);
+            });
+
+
+            $('#sCalendar').on('click', function () {
+                $('#StartTimePicker').trigger('focus');
+            });
+
+            $('#EndTimePicker').datepicker({
+                format: 'dd/mm/yyyy',
+                pickTime: false,
+                autoclose: true,
+                startDate: new Date(),
+                startView: 'month',
+                orientation: "bottom",
+            }).on('changeDate', function (selected) {
+                //debugger;
+                //var abc = selected.date.valueOf();
+                var endDate = new Date(selected.date.valueOf());
+                $('#StartTimePicker').datetimepicker('setEndDate', endDate);
+                $(this).valid();
+            }).on('clearDate', function (selected) {
+                $('#StartTimePicker').datetimepicker('setEndDate', null);
+            });
+
+
+
+            $('#eCalendar').on('click', function () {
+                $('#EndTimePicker').trigger('focus');
+            });
+
+            $('#description').summernote({
+                height: 100,
+            });
+
+
+        })
+    </script>
+
+    }

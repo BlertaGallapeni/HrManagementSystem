@@ -1,0 +1,810 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>Veprimet</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Shto</value>
+  </data>
+  <data name="AddClient" xml:space="preserve">
+    <value>Shto klient</value>
+  </data>
+  <data name="AddDepartment" xml:space="preserve">
+    <value>Shto Departament</value>
+  </data>
+  <data name="AddDesignation" xml:space="preserve">
+    <value>Shto Pozitën</value>
+  </data>
+  <data name="AddEmployee" xml:space="preserve">
+    <value>Shto punëtor</value>
+  </data>
+  <data name="AddProject" xml:space="preserve">
+    <value>Shto Projekt</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Adresa</value>
+  </data>
+  <data name="AddTask" xml:space="preserve">
+    <value>Shto Detyrë</value>
+  </data>
+  <data name="AdminDashboard" xml:space="preserve">
+    <value>Paneli i adminit</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Të gjithë</value>
+  </data>
+  <data name="AllProjects" xml:space="preserve">
+    <value>Të gjitha projektet</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisClient" xml:space="preserve">
+    <value>A jeni të sigurt që dëshironi të fshini këtë client?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisDepartment" xml:space="preserve">
+    <value>A jeni të sigurt që dëshironi të fshini këtë departament?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisDesignation" xml:space="preserve">
+    <value>A jeni të sigurt që dëshironi të fshini këtë pozitë?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisEmployee" xml:space="preserve">
+    <value>A jeni të sigurt që dëshironi të fshini këtë punëtor?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisProject" xml:space="preserve">
+    <value>A jeni të sigurt që dëshironi të fshini këtë projekt?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThisTask" xml:space="preserve">
+    <value>A jeni të sigurt që dëshironi të fshini këtë detyrë?</value>
+  </data>
+  <data name="AssignedStaff" xml:space="preserve">
+    <value>Stafi i përcaktuar</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Kthehu tek lista</value>
+  </data>
+  <data name="browseLabel" xml:space="preserve">
+    <value>Shfleto...</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anulo</value>
+  </data>
+  <data name="cancelLabel" xml:space="preserve">
+    <value>Anulo</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Qyteti</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Klienti</value>
+  </data>
+  <data name="ClientID" xml:space="preserve">
+    <value>ID e klientit</value>
+  </data>
+  <data name="Clients" xml:space="preserve">
+    <value>Klientët</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Kompania</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Emri i kompanisë</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Konfirmo</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Ri-shkruaj fjalëkalimin</value>
+  </data>
+  <data name="ContactPerson" xml:space="preserve">
+    <value>Personi kontaktues</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Vendi(Shteti)</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Paneli</value>
+  </data>
+  <data name="Deadline" xml:space="preserve">
+    <value>Afati i fundit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Fshije</value>
+  </data>
+  <data name="DeleteClient" xml:space="preserve">
+    <value>Fshij klientin</value>
+  </data>
+  <data name="DeleteDepartment" xml:space="preserve">
+    <value>Fshij departamentin</value>
+  </data>
+  <data name="DeleteDesignation" xml:space="preserve">
+    <value>Fshij pozitën</value>
+  </data>
+  <data name="DeleteEmployee" xml:space="preserve">
+    <value>Fshij punëtorin</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Departamenti</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>Departamentet</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Përshkrimi</value>
+  </data>
+  <data name="Designation" xml:space="preserve">
+    <value>Pozita</value>
+  </data>
+  <data name="Designations" xml:space="preserve">
+    <value>Pozitat</value>
+  </data>
+  <data name="dragTitle" xml:space="preserve">
+    <value>Lëviz / Riorganizo</value>
+  </data>
+  <data name="dropZoneClickTitle" xml:space="preserve">
+    <value>&lt;br&gt;(ose kliko për të zgjedhur {files})</value>
+  </data>
+  <data name="dropZoneTitle" xml:space="preserve">
+    <value>Tërhiqni dhe hidhni skedarët këtu ...</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Ndrysho</value>
+  </data>
+  <data name="EditClient" xml:space="preserve">
+    <value>Përditëso klientin</value>
+  </data>
+  <data name="EditDepartment" xml:space="preserve">
+    <value>Përditëso departamentin</value>
+  </data>
+  <data name="EditDesignation" xml:space="preserve">
+    <value>Përditëso pozitën</value>
+  </data>
+  <data name="EditEmployee" xml:space="preserve">
+    <value>Përditëso punëtorin</value>
+  </data>
+  <data name="EditProject" xml:space="preserve">
+    <value>Përditëso Projektin</value>
+  </data>
+  <data name="EditTask" xml:space="preserve">
+    <value>Përditëso Detyrën</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Emaili</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Punëtori</value>
+  </data>
+  <data name="EmployeeDashboard" xml:space="preserve">
+    <value>Paneli i punëtorit</value>
+  </data>
+  <data name="EmployeeID" xml:space="preserve">
+    <value>ID e punëtorit</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Punëtorët</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Data e përfundimit</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>Koha e mbarimit</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Anglisht</value>
+  </data>
+  <data name="EnterAddress" xml:space="preserve">
+    <value>Shkruani adresen</value>
+  </data>
+  <data name="EnterAllowedExtensions" xml:space="preserve">
+    <value>Shënoni formatet e lejuara</value>
+  </data>
+  <data name="EnterBirthday" xml:space="preserve">
+    <value>Shënoni ditëlindjen</value>
+  </data>
+  <data name="EnterCharacterName" xml:space="preserve">
+    <value>Shënoni emrin e personazhit</value>
+  </data>
+  <data name="EnterConfirmPassword" xml:space="preserve">
+    <value>Ri-shënoni fjalëkalimin</value>
+  </data>
+  <data name="EnterDescription" xml:space="preserve">
+    <value>Shënoni përshkrimin</value>
+  </data>
+  <data name="EnterDuration" xml:space="preserve">
+    <value>Shënoni kohëzgjatjen</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Shënoni emailin</value>
+  </data>
+  <data name="EnterEmailFrom" xml:space="preserve">
+    <value>Shënoni emailin nga</value>
+  </data>
+  <data name="EnterEmailTo" xml:space="preserve">
+    <value>Shënoni emailin tek</value>
+  </data>
+  <data name="EnterFullName" xml:space="preserve">
+    <value>Shënoni emrin e plotë</value>
+  </data>
+  <data name="EnterLatitude" xml:space="preserve">
+    <value>Shënoni gjerësinë gjeografike</value>
+  </data>
+  <data name="EnterLongitude" xml:space="preserve">
+    <value>Shënoni gjatësinë gjeografike</value>
+  </data>
+  <data name="EnterMaxUploadSize" xml:space="preserve">
+    <value>Shënoni maksimumin e madhësisë</value>
+  </data>
+  <data name="EnterMessage" xml:space="preserve">
+    <value>Shënoni mesazhin</value>
+  </data>
+  <data name="EnterMinimumAge" xml:space="preserve">
+    <value>Shënoni moshën minimale</value>
+  </data>
+  <data name="EnterName" xml:space="preserve">
+    <value>Shënoni emrin</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Shkruani fjalëkalimin e ri</value>
+  </data>
+  <data name="EnterNoColumn" xml:space="preserve">
+    <value>Shkruani numrin e kolonave të ulseve</value>
+  </data>
+  <data name="EnterNoRow" xml:space="preserve">
+    <value>Shkruani numrin e rreshtave të ulseve</value>
+  </data>
+  <data name="EnterOldPassword" xml:space="preserve">
+    <value>Shkruani fjalëkalimin e vjetër</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Shënoni fjalëkalimin</value>
+  </data>
+  <data name="EnterPhoneNumber" xml:space="preserve">
+    <value>Shënoni numrin e telefonit</value>
+  </data>
+  <data name="EnterPort" xml:space="preserve">
+    <value>Shënoni portin</value>
+  </data>
+  <data name="EnterPrice" xml:space="preserve">
+    <value>Shënoni çmimin</value>
+  </data>
+  <data name="EnterReleaseDate" xml:space="preserve">
+    <value>Shënoni datën e publikimit</value>
+  </data>
+  <data name="EnterSmtp" xml:space="preserve">
+    <value>Shënoni Smtp</value>
+  </data>
+  <data name="EnterSubject" xml:space="preserve">
+    <value>Shënoni përmbatjejn</value>
+  </data>
+  <data name="EnterSurname" xml:space="preserve">
+    <value>Shënoni mbiemrin</value>
+  </data>
+  <data name="EnterTrailerLink" xml:space="preserve">
+    <value>Shënoni linkun e trailerit</value>
+  </data>
+  <data name="EnterVATNumber" xml:space="preserve">
+    <value>Shënoni numrin e TVSH-së</value>
+  </data>
+  <data name="EnterYourEmail" xml:space="preserve">
+    <value>Shkruani emailin tuaj</value>
+  </data>
+  <data name="EnterYourName" xml:space="preserve">
+    <value>Shkruani emrin tuaj</value>
+  </data>
+  <data name="EnterYourPassword" xml:space="preserve">
+    <value>Shkruani fjalëkalimin tuaj</value>
+  </data>
+  <data name="EnterYourSurname" xml:space="preserve">
+    <value>Shkruani mbiemrin tuaj</value>
+  </data>
+  <data name="Fborderless" xml:space="preserve">
+    <value>Aktivizo modalitetin pa kufij</value>
+  </data>
+  <data name="Fclose" xml:space="preserve">
+    <value>Mbyll pamjen e detajuar</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="Ffullscreen" xml:space="preserve">
+    <value>Aktivizo ekranin e plotë</value>
+  </data>
+  <data name="FieldRequired" xml:space="preserve">
+    <value>Kjo fushë duhet të mbushet.</value>
+  </data>
+  <data name="filePlural" xml:space="preserve">
+    <value>dosjet</value>
+  </data>
+  <data name="fileSingle" xml:space="preserve">
+    <value>dosje</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Emri</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Të përgjithshme</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Ballina</value>
+  </data>
+  <data name="IForgotMyPass" xml:space="preserve">
+    <value>Kam harruar fjalëkalimin</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Imazhi</value>
+  </data>
+  <data name="JoinDate" xml:space="preserve">
+    <value>Data e regjistrimit</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Mbiemri</value>
+  </data>
+  <data name="Lead" xml:space="preserve">
+    <value>Lideri</value>
+  </data>
+  <data name="Leader" xml:space="preserve">
+    <value>Lideri</value>
+  </data>
+  <data name="Leads" xml:space="preserve">
+    <value>Liderët</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Kyçuni</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Dilni</value>
+  </data>
+  <data name="ManageAccount" xml:space="preserve">
+    <value>Menaxho llogarinë</value>
+  </data>
+  <data name="ManageRole" xml:space="preserve">
+    <value>Ndrysho rolin</value>
+  </data>
+  <data name="MinLength3" xml:space="preserve">
+    <value>Kjo fushë duhet të përmbajë të paktën tri karaktere.</value>
+  </data>
+  <data name="MinLength8" xml:space="preserve">
+    <value>Kjo fushë duhet të përmbajë të paktën tetë karaktere.</value>
+  </data>
+  <data name="msgAjaxError" xml:space="preserve">
+    <value>Diçka shkoi keq me operacionin {operation}. Ju lutemi provoni përsëri më vonë!</value>
+  </data>
+  <data name="msgAjaxProgressError" xml:space="preserve">
+    <value>{operation} dështoi</value>
+  </data>
+  <data name="msgCalculatingTime" xml:space="preserve">
+    <value>duke llogaritur kohën e mbetur</value>
+  </data>
+  <data name="msgCancelled" xml:space="preserve">
+    <value>Anuluar</value>
+  </data>
+  <data name="msgDeleteError" xml:space="preserve">
+    <value>Gabim në fshirje</value>
+  </data>
+  <data name="msgDuplicateFile" xml:space="preserve">
+    <value>kedari "{name}" me të njëjtën madhësi "{size} KB" është zgjedhur më parë. Kapërcimi i zgjedhjes së kopjuar.</value>
+  </data>
+  <data name="msgFileNotFound" xml:space="preserve">
+    <value>Skedari "{name}" nuk u gjet!</value>
+  </data>
+  <data name="msgFileNotReadable" xml:space="preserve">
+    <value>Skedari "{name}" nuk lexohet.</value>
+  </data>
+  <data name="msgFilePreviewAborted" xml:space="preserve">
+    <value>Paraqitja e skedarit u ndërpre për "{name}".</value>
+  </data>
+  <data name="msgFilePreviewError" xml:space="preserve">
+    <value>Ndodhi një gabim gjatë leximit të skedarit "{name}".</value>
+  </data>
+  <data name="msgFileRequired" xml:space="preserve">
+    <value>Ju duhet të zgjidhni një skedar për të ngarkuar.</value>
+  </data>
+  <data name="msgFileSecured" xml:space="preserve">
+    <value>Kufizimet e sigurisë parandalojnë leximin e skedarit "{name}".</value>
+  </data>
+  <data name="msgFilesTooLess" xml:space="preserve">
+    <value>Duhet të zgjidhni të paktën &lt;b&gt;{n}&lt;/b&gt; {files} për të ngarkuar.</value>
+  </data>
+  <data name="msgFilesTooMany" xml:space="preserve">
+    <value>Numri i skedarëve të zgjedhur për ngarkim &lt;b&gt;({n})&lt;/b&gt; tejkalon kufirin maksimal të lejuar prej &lt;b&gt;{m}&lt;/b&gt;.</value>
+  </data>
+  <data name="msgFoldersNotAllowed" xml:space="preserve">
+    <value>Tërhiq dhe lësho vetëm skedarët! U kapërcyen {n} dosjet e lëshuara.</value>
+  </data>
+  <data name="msgImageHeightLarge" xml:space="preserve">
+    <value>Lartësia e skedarit të imazhit "{name}" nuk mund të kalojë {size} px.</value>
+  </data>
+  <data name="msgImageHeightSmall" xml:space="preserve">
+    <value>Lartësia e skedarit të imazhit "{name}" duhet të jetë së paku {size} px.</value>
+  </data>
+  <data name="msgImageResizeError" xml:space="preserve">
+    <value>Nuk mund të merrja dimensionet e figurës për të ndryshuar përmasat.</value>
+  </data>
+  <data name="msgImageResizeException" xml:space="preserve">
+    <value>Gabim gjatë ndryshimit të madhësisë së imazhit. &lt;pre&gt;{errors}&lt;/pre&gt;</value>
+  </data>
+  <data name="msgImageWidthLarge" xml:space="preserve">
+    <value>Gjerësia e skedarit të imazhit "{name}" nuk mund të kalojë {size} px.</value>
+  </data>
+  <data name="msgImageWidthSmall" xml:space="preserve">
+    <value>Gjerësia e skedarit të imazhit "{name}" duhet të jetë së paku {size} px.</value>
+  </data>
+  <data name="msgInvalidFileExtension" xml:space="preserve">
+    <value>Zgjerim i pavlefshëm për skedarin "{name}". Vetëm skedarët "{extensions}" mbështeten.</value>
+  </data>
+  <data name="msgInvalidFileName" xml:space="preserve">
+    <value>Karaktere të pavlefshëm ose të pambështetur në emrin e skedarit "{name}".</value>
+  </data>
+  <data name="msgInvalidFileType" xml:space="preserve">
+    <value>Lloji i pavlefshëm për skedarin "{name}". Vetëm skedarët "{types}" mbështeten.</value>
+  </data>
+  <data name="msgLoading" xml:space="preserve">
+    <value>Po ngarkon skedarin {index} nga {skedarët} &amp;hellip;</value>
+  </data>
+  <data name="msgNo" xml:space="preserve">
+    <value>Jo</value>
+  </data>
+  <data name="msgNoFilesSelected" xml:space="preserve">
+    <value>Asnjë skedar i zgjedhur</value>
+  </data>
+  <data name="msgPaused" xml:space="preserve">
+    <value>Pauzuar</value>
+  </data>
+  <data name="msgPendingTime" xml:space="preserve">
+    <value>{time} të mbetura</value>
+  </data>
+  <data name="msgPlaceholder" xml:space="preserve">
+    <value>Zgjidh {files} ...</value>
+  </data>
+  <data name="msgProgress" xml:space="preserve">
+    <value>Po ngarkon skedarin {index} nga {files} - {name} - {percent}% e përfunduar.</value>
+  </data>
+  <data name="msgProgressError" xml:space="preserve">
+    <value>Gabim</value>
+  </data>
+  <data name="msgResumableUploadRetriesExceeded" xml:space="preserve">
+    <value>Ngarkimi u ndërpre përtej &lt;b&gt;{max}&lt;/b&gt; riprovimeve për skedarin &lt;b&gt;{file}&lt;/b&gt;! Detajet e gabimit: &lt;pre&gt;{error}&lt;/pre&gt;</value>
+  </data>
+  <data name="msgSelected" xml:space="preserve">
+    <value>{n} {files} të zgjedhur</value>
+  </data>
+  <data name="msgSizeTooLarge" xml:space="preserve">
+    <value>Skedari "{name}" (&lt;b&gt;{size} KB&lt;/b&gt;) tejkalon madhësinë maksimale të lejuar të ngarkimit prej &lt;b&gt;{maxSize} KB&lt;/b&gt;.</value>
+  </data>
+  <data name="msgSizeTooSmall" xml:space="preserve">
+    <value>Skedari "{name}" (&lt;b&gt;{size} KB&lt;/b&gt;) është shumë i vogël dhe duhet të jetë më i madh se &lt;b&gt;{minSize} KB&lt;/b&gt;.</value>
+  </data>
+  <data name="msgTotalFilesTooMany" xml:space="preserve">
+    <value>Mund të ngarkoni maksimumi skedarë &lt;b&gt;{m}&lt;/b&gt; (zbuluar &lt;b&gt;{n}&lt;/b&gt; skedarë).</value>
+  </data>
+  <data name="msgUploadAborted" xml:space="preserve">
+    <value>Ngarkimi i skedarit u ndërpre</value>
+  </data>
+  <data name="msgUploadBegin" xml:space="preserve">
+    <value>Inicuar &amp;hellip;</value>
+  </data>
+  <data name="msgUploadEmpty" xml:space="preserve">
+    <value>Nuk ka të dhëna të vlefshme të disponueshme për ngarkim.</value>
+  </data>
+  <data name="msgUploadEnd" xml:space="preserve">
+    <value>Përfunduar</value>
+  </data>
+  <data name="msgUploadError" xml:space="preserve">
+    <value>Gabim në ngarkim</value>
+  </data>
+  <data name="msgUploadResume" xml:space="preserve">
+    <value>Rifillimi i ngarkimit ...</value>
+  </data>
+  <data name="msgUploadThreshold" xml:space="preserve">
+    <value>Përpunuar ...</value>
+  </data>
+  <data name="msgValidationError" xml:space="preserve">
+    <value>Gabim në validim</value>
+  </data>
+  <data name="msgZoomModalHeading" xml:space="preserve">
+    <value>Paraqitje e hollësishme</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Emri</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Fjalëkalimi i ri</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Fjalëkalimi i vjetër</value>
+  </data>
+  <data name="OldPasswordWrong" xml:space="preserve">
+    <value>Fjalëkalimi i vjetër që keni shënuar është i pasaktë.</value>
+  </data>
+  <data name="OR" xml:space="preserve">
+    <value>OSE</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Fjalëkalimi</value>
+  </data>
+  <data name="PasswordInvalidFormat" xml:space="preserve">
+    <value>Fjalëkalimi juaj duhet të përmbajë 1 shkronjë të madhe, 1 numër dhe 1 karakter special (!@#$%^&amp;*).</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>Fjalëkalimi konfirmues nuk është i njejtë!</value>
+  </data>
+  <data name="PersonalNumber" xml:space="preserve">
+    <value>Numri personal</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Numri i telefonit</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioriteti</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privatësia</value>
+  </data>
+  <data name="Proceed" xml:space="preserve">
+    <value>Proceso</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profili</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Foto e profilit</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Projekti</value>
+  </data>
+  <data name="ProjectID" xml:space="preserve">
+    <value>Id e Projektit</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Emri i Projektit</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projektet</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Norma</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Më mbajë mend</value>
+  </data>
+  <data name="removeLabel" xml:space="preserve">
+    <value>Hiqe</value>
+  </data>
+  <data name="removeTitle" xml:space="preserve">
+    <value>Pastro skedarët e zgjedhur</value>
+  </data>
+  <data name="removeTitle1" xml:space="preserve">
+    <value>Hiq skedarin</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Roli</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Rolet</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Ruaj</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Kërko...</value>
+  </data>
+  <data name="SelectProfilePicture" xml:space="preserve">
+    <value>Zgjedhni foton e profilit</value>
+  </data>
+  <data name="SetupPasswordTitle" xml:space="preserve">
+    <value>Fjalëkalimi</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Kyçuni</value>
+  </data>
+  <data name="SignInFacebook" xml:space="preserve">
+    <value>Kyçuni me Facebook</value>
+  </data>
+  <data name="SignInGoogle" xml:space="preserve">
+    <value>Kyçuni me Google</value>
+  </data>
+  <data name="SignInToStart" xml:space="preserve">
+    <value>Kyçuni që të filloni sesionin tuaj</value>
+  </data>
+  <data name="sProcessing" xml:space="preserve">
+    <value>Duke procesuar...</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Data e fillimit</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Statusi</value>
+  </data>
+  <data name="TeamLead" xml:space="preserve">
+    <value>Lideri i ekipit</value>
+  </data>
+  <data name="TeamMembers" xml:space="preserve">
+    <value>Anëtarët e ekipit</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Lloji</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Përditëso</value>
+  </data>
+  <data name="uploadBatch" xml:space="preserve">
+    <value>ngarkimi i skedarit në grupe</value>
+  </data>
+  <data name="uploadExtra" xml:space="preserve">
+    <value>forma e ngarkimit të të dhënave</value>
+  </data>
+  <data name="uploadLabel" xml:space="preserve">
+    <value>Ngarko</value>
+  </data>
+  <data name="uploadRetryTitle" xml:space="preserve">
+    <value>Riprovo ngarkimin</value>
+  </data>
+  <data name="uploadThumb" xml:space="preserve">
+    <value>ngarkimi i skedarit</value>
+  </data>
+  <data name="uploadTitle" xml:space="preserve">
+    <value>Ngarko skedarët e zgjedhur</value>
+  </data>
+  <data name="uploadTitle1" xml:space="preserve">
+    <value>Ngarko skedarin</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Përdoruesi</value>
+  </data>
+  <data name="UserAddForm" xml:space="preserve">
+    <value>Forma për shtimin e përdoruesve të rinj</value>
+  </data>
+  <data name="UserBirthdayDescription" xml:space="preserve">
+    <value>Përcaktoni datën përdoruesi ka lindur</value>
+  </data>
+  <data name="UserBirthdayTitle" xml:space="preserve">
+    <value>Ditëlindja e përdoruesit</value>
+  </data>
+  <data name="UserConfirmPasswordDescription" xml:space="preserve">
+    <value>Shënoni fjalëkalimin konfirmues të përdoruesit. Fjalëkalimi konfirmues duhet të mbushet dhe të jetë i njejtë sikurse fjalëkalimi i parë.</value>
+  </data>
+  <data name="UserConfirmPasswordTitle" xml:space="preserve">
+    <value>Fjalëkalimi konfirmues</value>
+  </data>
+  <data name="UserEditForm" xml:space="preserve">
+    <value>Forma për ndryshimin e përdoruesit të zgjedhur.</value>
+  </data>
+  <data name="UserEmailDescription" xml:space="preserve">
+    <value>Shkruani emailin e përdoruesit. Emaili duhet të mbushet dhe të përmbajë formatin e një emaili valid. Shembull: emri.mbiemri@gmail.com</value>
+  </data>
+  <data name="UserEmailTitle" xml:space="preserve">
+    <value>Emaili i përdoruesit</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Përdoruesit</value>
+  </data>
+  <data name="UserSettings" xml:space="preserve">
+    <value>Aranzhimet e përdoruesit</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Mirësevini</value>
+  </data>
+  <data name="YourAccount" xml:space="preserve">
+    <value>Llogaria juaj</value>
+  </data>
+  <data name="YourPersonalInfo" xml:space="preserve">
+    <value>Informatat tuaja personale</value>
+  </data>
+  <data name="YourProfile" xml:space="preserve">
+    <value>Profili juaj</value>
+  </data>
+</root>

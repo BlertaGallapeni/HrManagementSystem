@@ -1,0 +1,140 @@
+﻿@model IEnumerable<TaskVM>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h2>
+                                    @SharedLocalizer["Tasks"] of @ViewBag.ProjectName Project
+                                </h2>
+                                <ul class="nav nav-treeview" style="font-size:18px">
+                                    <li class="nav-item mr-2"><a style="color:black" href="">@SharedLocalizer["Dashboard"]</a></li>
+                                    <li class="nav-item text-black-50" active">/ @SharedLocalizer["Tasks"]</li>
+                                </ul>
+                            </div>
+                            <div class="col-auto mx-auto mt-3">
+                                <a class="btn rounded-pill float-right bg-olive" asp-controller="Task" asp-action="Create" asp-route-projectId="@ViewBag.ProjectId">
+                                    <i class="fas fa-plus"></i> &nbsp; @SharedLocalizer["AddTask"]
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblData" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@SharedLocalizer["Title"]</th>
+                                   <th>@SharedLocalizer["AssignedTo"]</th>
+                                    <th>@SharedLocalizer["Actions"]</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+
+                <div class="modal fade" id="modal-delete" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" align="center">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- /.container-fluid -->
+</section>
+
+
+@section Scripts {
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.3.0/js/responsive.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable({
+                "sAjaxSource": "@Url.Action("GetTasksJson","Task", new { projectId = ViewBag.ProjectId})",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bPaginate": true,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                "iDisplayLength": 6,
+                //"iDisplayStart" : 2,
+                "columns": [
+                    { "data": "name" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            console.log(data);
+                            var actions = '<img src="' + data.employeeProfilePath + '"  class="elevation-2" style="border-radius:50%; width:45px" alt="User Image">&emsp; ' + data.assignedToFullName
+                            return actions;
+                        },
+                        "width": "18%"
+                    },                   
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                             
+                            var actions = `
+                                     <div style = "text-align:center" >
+                                            <a type="button" data-toggle="dropdown" aria-expanded="true" > <i class="bi bi-three-dots-vertical"> </i>
+                                                </a>
+                                                <ul class="dropdown-menu" style = "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
+                                                            <li><a class="dropdown-item" href = "/Admin/Task/Edit?id=${data.id}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                                            <li><a class="dropdown-item" href = "" data-toggle="modal" data-target="#modal-delete" onClick=deleteTask(${data.id}) class="btn btn-outline-danger mx-2" > <i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
+                                                </ul>
+                                     </div>`
+                            return actions;
+                        },
+                        "width": "5%"
+                    }
+
+
+
+                ]
+            });
+
+        })
+        function deleteTask(id) {
+            $.get("/Admin/Task/Delete", { id: id }, function (result) {
+                $(".modal-body").html(result);
+            })
+        }
+    </script>
+}

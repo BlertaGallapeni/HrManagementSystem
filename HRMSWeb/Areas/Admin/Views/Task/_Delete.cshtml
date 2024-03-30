@@ -1,0 +1,13 @@
+﻿@model TaskVM
+
+<form method="post" asp-action="Delete">
+    @Html.AntiForgeryToken()
+    <input asp-for="Id" type="hidden" />
+
+    <h4>@SharedLocalizer["AreYouSureYouWantToDeleteThisTask"] <br /></h4>
+    <hr />
+    <button type="submit" class="btn btn-danger" style="width:150px">@SharedLocalizer["Delete"]</button>
+    <a asp-controller="Task" asp-action="Index" asp-route-projectId="@Model.ProjectId" class="btn btn-secondary" style="width:150px">@SharedLocalizer["Cancel"]</a>
+</form>
+
+<partial name="_ValidationScriptsPartial" />

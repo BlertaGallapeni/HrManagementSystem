@@ -1,0 +1,328 @@
+﻿@model ProjectVM
+<style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: dimgrey !important;
+    }
+</style>
+@section Styles{
+    <link href="~/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="card card-secondary mx-auto">
+    <div class="card-header">
+        <h3 class="card-title">@SharedLocalizer["AddProject"]</h3>
+    </div>
+    <div asp-validation-summary="All" class="text-danger mt-2"></div>
+    <form id="formdep" method="post" asp-controller="Project" asp-action="Create" enctype="multipart/form-data">
+        <div class="card-body row">
+            <div class="mb-3 form-group col-6">
+                <label asp-for="Name">@SharedLocalizer["ProjectName"]</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="ClientId">@SharedLocalizer["Client"]</label>
+                <select asp-for="ClientId" id="selectClient" class="custom-select rounded-0 form-control">
+                </select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-6">
+                <div class="form-group">
+                    <label>@SharedLocalizer["StartDate"]</label>
+                    <div class="input-group date" id="startD">
+                        <input type="text" asp-for="StartDate" readonly id="StartTimePicker" class="form-control help-sidebar" data-title="@SharedLocalizer["ScheduleStartTimeTitle"]" data-description="@SharedLocalizer["ScheduleStartTimeDescription"]" placeholder="" />
+                        <div class="input-group-append ">
+                            <span class="input-group-text"><i id="sCalendar" class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group col-6">
+                <div class="form-group">
+                    <label>@SharedLocalizer["EndDate"]</label>
+                    <div class="input-group date" id="endD">
+                        <input type="text" asp-for="EndDate" id="EndTimePicker" readonly class="form-control help-sidebar" data-title="@SharedLocalizer["ScheduleEndTimeTitle"]" data-description="@SharedLocalizer["ScheduleEndTimeDescription"]" placeholder="" />
+                        <div class="input-group-append ">
+                            <span class="input-group-text"><i id="eCalendar" class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="ProjectID">@SharedLocalizer["ProjectID"]</label>
+                <input asp-for="ProjectID" class="form-control" />
+                <span asp-validation-for="ProjectID" class="text-danger"></span>
+            </div>
+             <div class="mb-3 form-group col-2">
+                <label asp-for="Rate">@SharedLocalizer["Rate"]</label>
+                <input asp-for="Rate" class="form-control" placeholder="$50"/>
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+              <div class="mb-3 form-group col-2">
+                <label asp-for="RateTypeId">@SharedLocalizer["Type"]</label>
+                <select asp-for="RateTypeId" id="selectRate" class="custom-select rounded-0 form-control">
+                </select>
+                <span asp-validation-for="RateTypeId" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-2">
+                <label asp-for="PriorityId">@SharedLocalizer["Priority"]</label>
+                <select asp-for="PriorityId" id="selectPriority" class="custom-select rounded-0">
+                </select>
+                <span asp-validation-for="PriorityId" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="TeamLeadId">@SharedLocalizer["TeamLead"]</label>
+                <select asp-for="TeamLeadId" id="selectLead" class="custom-select rounded-0">
+                </select>
+                <span asp-validation-for="TeamLeadId" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="Employees">@SharedLocalizer["TeamMembers"]</label>
+                <select asp-for="Employees" id="selectEmployee" class="custom-select rounded-0 text-black">
+                </select>
+                <span asp-validation-for="TeamMembers" class="text-danger"></span>
+            </div>
+           
+             <div class="col-sm-12">
+                <div class="form-group">
+                    <label>@SharedLocalizer["Description"]</label>
+                    <div class="mb-3">
+                        <div class="help-sidebar" data-title="@SharedLocalizer["DescriptionTitle"]" data-description="@SharedLocalizer["DescriptionDescription"]">
+                            <textarea class="textarea" id="description" asp-for="Description" placeholder="@SharedLocalizer["EnterDescription"]"
+                            style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 form-group col-2">
+                <label asp-for="StatusId">@SharedLocalizer["Status"]</label>
+                <select asp-for="StatusId" id="selectStatus" class="custom-select rounded-0 form-control ">
+                </select>
+                <span asp-validation-for="StatusId" class="text-danger"></span>
+            </div>
+      
+        </div>
+
+        <div class="modal-footer justify-content-between">
+            <a asp-controller="Project" asp-action="Index" class="btn btn-secondary" style="width:150px">@SharedLocalizer["BackToList"]</a>
+            <button type="submit" class="btn bg-olive" style="width:150px">@SharedLocalizer["Add"]</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#selectStatus').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetStatus","Project")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.key,
+                                }
+                            })
+                        };
+                    }
+                },
+                // minimumInputLength: 1
+                placeholder: '--Select Status--',
+            });
+
+            $('#selectPriority').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetPriority","Project")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.key,
+                                }
+                            })
+                        };
+                    }
+                },
+                placeholder: 'Low',
+                // minimumInputLength: 1
+                
+            });
+           
+            $('#selectRate').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetRateType","Project")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.key,
+                                }
+                            })
+                        };
+                    }
+                },
+                // minimumInputLength: 1
+                placeholder: 'Hourly',
+            });
+
+            $('#selectClient').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetClients","Client")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.companyName,
+                                    id: item.id,
+                                }
+                            })
+                        };
+                    }
+                },
+                // minimumInputLength: 1
+                placeholder: '--Select Client--',
+            });
+
+            $('#selectEmployee').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetAllEmployees","Project")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                    console.log(item);
+                                return {
+                                    text: item.applicationUserVM.fullName,
+                                    id: item.id,
+                                }
+                            })
+                        };
+                    }
+                },
+                // minimumInputLength: 1
+                placeholder: '--Select Team Members--',
+            });
+
+             $('#selectLead').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetAllEmployees","Project")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                    console.log(item);
+                                return {
+                                    text: item.applicationUserVM.fullName,
+                                    id: item.id,
+                                }
+                            })
+                        };
+                    }
+                },
+                // minimumInputLength: 1
+                placeholder: '--Select Team Leader--',
+            });
+
+            // Date range picker
+            $('#StartTimePicker').datetimepicker({
+                format: 'dd/mm/yyyy hh:ii',
+                autoclose: true,
+                startView: 'month',
+                pickerPosition: "bottom-right",
+            }).on('changeDate', function (selected) {
+                var startDate = new Date(selected.date.valueOf());
+                $('#EndTimePicker').datetimepicker('setStartDate', startDate);
+                $(this).valid();
+            }).on('clearDate', function (selected) {
+                $('#EndTimePicker').datetimepicker('setStartDate', null);
+            });
+
+
+            $('#sCalendar').on('click', function () {
+                $('#StartTimePicker').trigger('focus');
+            });
+
+            $('#EndTimePicker').datetimepicker({
+                format: 'dd/mm/yyyy hh:ii',
+                autoclose: true,
+                startView: 'month',
+                pickerPosition: "bottom-right",
+            }).on('changeDate', function (selected) {
+                //debugger;
+                //var abc = selected.date.valueOf();
+                var endDate = new Date(selected.date.valueOf());
+                $('#StartTimePicker').datetimepicker('setEndDate', endDate);
+                $(this).valid();
+            }).on('clearDate', function (selected) {
+                $('#StartTimePicker').datetimepicker('setEndDate', null);
+            });
+
+
+
+            $('#eCalendar').on('click', function () {
+                $('#EndTimePicker').trigger('focus');
+            });
+
+            $('#description').summernote({
+                height: 100,
+            });
+
+
+        })
+    </script>
+
+    }

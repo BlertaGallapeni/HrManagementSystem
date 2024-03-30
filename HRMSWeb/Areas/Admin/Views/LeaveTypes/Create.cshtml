@@ -1,0 +1,46 @@
+﻿@model LeaveTypeVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="card card-secondary mx-auto">
+    <div class="card-header">
+        <h3 class="card-title">Add Leave Type</h3>
+    </div>
+
+<form id="formdep" method="post" asp-controller="LeaveTypes" asp-action="Create">
+        @Html.AntiForgeryToken()
+    <div class="card-body row">
+        <div class="mb-3 form-group col-6">
+                <label asp-for="Name"></label><span class="text-danger text-bold">&nbsp;*&nbsp;</span>
+            <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+            <div class="mb-3 form-group col-6">
+                <label asp-for="DefaultDays" class="control-label"></label><span class="text-danger text-bold">&nbsp;*&nbsp;</span>
+                <input asp-for="DefaultDays" class="form-control" />
+                <span asp-validation-for="DefaultDays" class="text-danger"></span>
+            </div>
+        </div>
+    <div class="modal-footer justify-content-between">
+            <a class="btn btn-secondary" asp-area="Admin" asp-controller="LeaveTypes" asp-action="Index">@SharedLocalizer["BackToList"]</a>
+            <button type="submit" value="Create" class="btn bg-olive">@SharedLocalizer["Add"]</button>
+    </div>
+
+</form>
+</div>
+<partial name="_ValidationScriptsPartial" />

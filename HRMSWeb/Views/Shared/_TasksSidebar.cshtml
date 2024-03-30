@@ -1,0 +1,53 @@
+﻿@using HRMS.DataAccess.Repository.IRepository;
+@inject IProjectRepository _projectRepo;
+@{
+    var action = ViewContext.RouteData.Values["action"].ToString().ToLower();
+    var controller = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var projects = new SelectList(_projectRepo.GetAll(), "Id", "Name");
+}
+@model List<ProjectVM>
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+     <!-- Brand Logo -->
+    <a href="Index" class="brand-link">
+    <img src="~/FrontEnd/dist/img/logoo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">HR Management</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!--Main-->
+                <li class="nav-item">
+                    <!--menu-open-->
+                    <a asp-area="Admin" asp-controller="Home" class="nav-link">
+                        <!--active-->
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Back to Home
+                        </p>
+                    </a>
+                </li>
+                @foreach(var project in projects)
+                {
+                    <li class="nav-item has-treeview @(controller == "project" ? "menu-open" : "")">
+                        <a asp-area="Admin" asp-controller="Task" asp-action="Index" asp-route-projectId="@project.Value" class="nav-link @(controller == "project" ? "active" : "")">
+                         
+                            <p>
+                                @project.Text
+                               
+                            </p>
+                        </a>
+
+                    </li>
+                }
+              
+     
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,213 @@
+﻿@model IEnumerable<ProjectVM>
+<style>
+    table.dataTable tbody td {
+        vertical-align: middle;
+    }
+</style>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h2>
+                                    @SharedLocalizer["Leads"]
+                                </h2>
+                                <ul class="nav nav-treeview" style="font-size:18px">
+                                    <li class="nav-item mr-2"><a style="color:black" href="">@SharedLocalizer["Dashboard"]</a></li>
+                                    <li class="nav-item text-black-50" active">/ @SharedLocalizer["Leads"]</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblData" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@SharedLocalizer["Leader"]</th>
+                                    <th>@SharedLocalizer["Email"]</th>
+                                    <th>@SharedLocalizer["Phone"]</th>
+                                    <th>@SharedLocalizer["Project"]</th>
+                                    <th>@SharedLocalizer["AssignedStaff"]</th>
+                                    <th>@SharedLocalizer["Status"]</th>
+                                    <th>@SharedLocalizer["Created"]</th>
+                                    <th>@SharedLocalizer["Actions"]</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+
+                <div class="modal fade" id="modal-delete" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" align="center">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal fade" id="modal-emp-info" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4>All Team Members</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body-emp" align="center">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- /.container-fluid -->
+</section>
+
+
+@section Scripts {
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.3.0/js/responsive.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable({
+                "sAjaxSource": "@Url.Action("GetProjectsJson","Project")",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bPaginate": true,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                //"iDisplayLength": 2,
+                //"iDisplayStart" : 2,
+                "columns": [
+                   {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            console.log(data);
+                            var actions = '<img src="' + data.teamLeadProfilePic + '"  class="elevation-2" style="border-radius:50%; width:45px" alt="User Image">&emsp;' + data.teamLeadName
+                            return actions;
+                        },
+                    },
+                    { "data": "teamLeadEmail" },
+                    { "data": "teamLeadPhone" },
+                    { "data": "name" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            var action = "";
+                            $.each(data.teamMembers, function (key, value) {
+                                if (key > 2) {
+
+                                    if (data.teamMembers.length > 3) {
+                                        action += `<button type="button" class="btn bg-olive btn-sm " style="font-size:18px; border-radius: 80px; height:47px;width:47px" data-toggle="modal" data-target="#modal-emp-info" onClick=allEmployees(${data.id}) aria-label="Richard Miles">` + "<b>+</b>" + (data.teamMembers.length - key) + `</button>`
+                                    }
+                                    return false;
+                                }
+                                action += '<a href="#" data-toggle="tooltip" data-placement="bottom" title="' + value.applicationUserVM.fullName + '"><img src="' + value.applicationUserVM.profilePicture.path + '"  class="elevation-2" style="border-radius:50%; width:45px" alt="User Image"></a > ';
+
+                            });
+                            action += ""
+                            return action;
+                        },
+                            "width":"17%"
+
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            var actions = ``;
+
+                            if (data.teamStatusName == "Working" || data.teamStatusName == "Duke punuar") {
+                                actions += `<span class="badge badge-pill badge-light" style="font-size:90%"><i class="bi bi-record-circle text-success"></i> &nbsp; ${data.teamStatusName}</span>`
+                            }
+                            else {
+
+                                actions += `<span class="badge badge-pill badge-light" style="font-size:90%"><i class="bi bi-record-circle text-danger"></i> &nbsp; ${data.teamStatusName}</span>`
+                            }
+
+                            return actions;
+
+                        },
+                        "width": "10%"
+                    },
+                    { "data": "createdDate", "render": DataTable.render.datetime('DD MMM YYYY') },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            //console.log(data);
+                            var actions = `
+                                     <div style = "text-align:center" >
+                                            <a type="button" data-toggle="dropdown" aria-expanded="true" > <i class="bi bi-three-dots-vertical"> </i>
+                                                </a>
+                                                <ul class="dropdown-menu" style = "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);" x-placement="bottom-start">
+                                                            <li><a class="dropdown-item" href = "/Admin/Project/Edit?id=${data.id}" class="btn btn-outline-primary mx-2" > <i class="bi bi-pencil-square text-info" > </i> &nbsp; @SharedLocalizer["Edit"] </a></li>
+                                                            <li><a class="dropdown-item" href = "" data-toggle="modal" data-target="#modal-delete" onClick=deleteProject(${data.id}) class="btn btn-outline-danger mx-2" > <i class="bi bi-trash text-danger"></i> &nbsp; @SharedLocalizer["Delete"]</a></li>
+                                                </ul>
+                                     </div>`
+                            return actions;
+                        },
+                        "width": "5%"
+                    }
+
+
+
+                ],
+                "fnInitComplete": function (oSettings, json) {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }
+            });
+           
+        })
+
+        function deleteProject(id) {
+            $.get("/Admin/Project/Delete", { id: id }, function (result) {
+                $(".modal-body").html(result);
+            })
+        }
+        function allEmployees(id) {
+            console.log(id);
+            $.get("/Admin/Project/AllEmployees", { projectId: id }, function (result) {
+                $(".modal-body-emp").html(result);
+            })
+        }
+    </script>
+}

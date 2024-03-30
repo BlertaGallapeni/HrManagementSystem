@@ -1,0 +1,170 @@
+﻿@using HRMS.Utility;
+@{
+    var action = ViewContext.RouteData.Values["action"].ToString().ToLower();
+    var controller = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+}
+@inject SignInManager<ApplicationUser> SignInManager
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="Index" class="brand-link">
+        <img src="~/FrontEnd/dist/img/logoo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">HR Management</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-4">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <!--Main-->
+                <li class="nav-header">Main</li>
+                <li class="nav-item  @(controller == "home" ? "menu-open" : "")">
+                    <!--menu-open-->
+                    <a href="#" class="nav-link  @(controller == "home" ? "active" : "" )">
+                        <!--active-->
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            @SharedLocalizer["Dashboard"]
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item ">
+                            <a asp-controller="Home" asp-action="Index" class="nav-link @(controller == "home" ? "active" : "")">
+                                <p>&emsp;@SharedLocalizer["AdminDashboard"]</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index2.html" class="nav-link">
+                                <p>&emsp;@SharedLocalizer["EmployeeDashboard"]</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!--Employees-->
+                <li class="nav-header">@SharedLocalizer["Employees"]</li>
+                <li class="nav-item has-treeview @(controller == "employee" || controller == "department" || controller == "designation" || controller == "leavetypes" || controller == "leaverequest" ? "menu-open" : "" )">
+                    <a href="#" class="nav-link @(controller == "employee" || controller == "department" || controller == "designation" || controller == "leavetypes" || controller == "leaverequest" ? "active" : "" )">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                                @SharedLocalizer["Employees"]
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-action="Index" asp-controller="Employee" class="nav-link @(controller == "employee" ? "active" : "" )">
+
+                                <p>&emsp; @SharedLocalizer["All"] @SharedLocalizer["Employees"]</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-action="Index" asp-controller="Department" class="nav-link @(controller == "department" ? "active" : "" )">
+
+                                <p>&emsp; @SharedLocalizer["Departments"]</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-action="Index" asp-controller="Designation" class="nav-link @(controller == "designation" ? "active" : "" )">
+
+                                <p>&emsp; @SharedLocalizer["Designations"]</p>
+                            </a>
+                        </li>
+                         @if (SignInManager.IsSignedIn(User) && User.IsInRole(SD.Role_Admin))
+                            {
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-action="Index" asp-controller="LeaveRequest" class="nav-link @(controller == "leaverequest" && action=="index" ? "active" : "" )">
+
+                                <p>&emsp; @SharedLocalizer["Leave Requests"]</p>
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a asp-area="Admin" asp-action="Index" asp-controller="LeaveTypes" class="nav-link @(controller == "leavetypes" ? "active" : "" )">
+                                    <p>&emsp; @SharedLocalizer["Leave Type"]</p>
+                                </a>
+                            </li>
+                            }
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole(SD.Role_Employee))
+                            {
+                            <li class="nav-item">
+                                <a asp-area="Admin" asp-action="MyLeave" asp-controller="LeaveRequest" class="nav-link @(controller == "leaverequest" && action=="myleave" ? "active" : "" )">
+
+                                    <p>&emsp; @SharedLocalizer["My Leaves"]</p>
+                                </a>
+                            </li>
+                            }
+                    </ul>
+
+                </li>
+                <li class="nav-item has-treeview @(controller == "client" ? "menu-open" : "")">
+                    <a asp-area="Admin" asp-action="Index" asp-controller="Client" class="nav-link @(controller == "client" ? "active" : "")">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                                @SharedLocalizer["Clients"]
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview @(controller == "project" || controller == "task" ? "menu-open" : "")">
+                    <a href="" class="nav-link @(controller == "project" ? "active" : "")">
+                        <i class="nav-icon fas fa-rocket"></i>
+                        <p>
+                                @SharedLocalizer["Projects"]
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-action="Index" asp-controller="Project" class="nav-link  @((action == "index" || action == "create" || action == "edit" || action == "delete") && controller == "project" ? "active" : "" )">
+                                <p>&emsp; @SharedLocalizer["AllProjects"]</p>
+                            </a>
+                        </li>
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole(SD.Role_Admin))
+                            {
+                            <li class="nav-item">
+                                <a asp-area="Admin" asp-action="Index" asp-controller="Task" class="nav-link  @(controller == "task" ? "active" : "" )">
+                                    <p>&emsp; @SharedLocalizer["Tasks"]</p>
+                                </a>
+                            </li>
+                            }
+                            @*     <li class="nav-item">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Task" class="nav-link  @(controller == "task" ? "active" : "" )">
+                        <p>&emsp; @SharedLocalizer["Task Board"]</p>
+                        </a>
+                        </li>*@
+                    </ul>
+                </li>
+
+                <li class="nav-item  has-treeview @(controller == "team" ? "menu-open" : "")">
+                    <a asp-area="Admin" asp-action="Index" asp-controller="Team" class="nav-link  @((action == "index" || action == "edit" || action == "delete") && controller == "team" ? "active" : "" )">
+                        <i class="nav-icon fas fa-user-secret"></i>
+                        <p>@SharedLocalizer["Leads"]</p>
+                    </a>
+                </li>
+                <li class="nav-item  has-treeview @(controller == "usermanagement" ? "menu-open" : "")">
+                    <a asp-area="" asp-controller="UserManagement" asp-action="Index" class="nav-link @((action == "index" || action == "manage") && controller == "usermanagement" ? "active" : "" )">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>@SharedLocalizer["Users"]</p>
+                    </a>
+                </li>
+
+
+                <li class="nav-header">Pages</li>
+                <li class="nav-item">
+                    <a asp-area="Admin" asp-controller="Manage" asp-action="Index" class="nav-link">
+                        <i class="fas fa-circle nav-icon"></i>
+
+                        <p>@SharedLocalizer["Profile"]</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+

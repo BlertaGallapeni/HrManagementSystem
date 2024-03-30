@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Profiles\**" />
+    <Content Remove="Profiles\**" />
+    <EmbeddedResource Remove="Profiles\**" />
+    <None Remove="Profiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Admin\Views\Designation\Edit.cshtml~RF4121e2e4.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.12" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.0.0" />
+    <PackageReference Include="UmbracoCms.Core" Version="8.18.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HRMS.DataAccess\HRMS.DataAccess.csproj" />
+    <ProjectReference Include="..\HRMS.Models\HRMS.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\Leave\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Leave\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\Create.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\Details.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\Index.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveRequest\MyLeave.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Create.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Details.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\LeaveTypes\Index.cshtml" />
+    <None Include="wwwroot\lib\fileinput\js\fileinput.js" />
+    <None Include="wwwroot\lib\fileinput\js\fileinput.min.js" />
+    <None Include="wwwroot\lib\tooltip\js\plugins\tooltipster\SVG\tooltipster-SVG.js" />
+    <None Include="wwwroot\lib\tooltip\js\plugins\tooltipster\SVG\tooltipster-SVG.min.js" />
+    <None Include="wwwroot\lib\tooltip\js\tooltipster.bundle.js" />
+    <None Include="wwwroot\lib\tooltip\js\tooltipster.bundle.min.js" />
+    <None Include="wwwroot\lib\tooltip\js\tooltipster.main.js" />
+    <None Include="wwwroot\lib\tooltip\js\tooltipster.main.min.js" />
+  </ItemGroup>
+
+</Project>

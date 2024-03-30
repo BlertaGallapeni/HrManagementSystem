@@ -1,0 +1,13 @@
+﻿@model ApplicationUserVM
+
+<form method="post" asp-action="Delete">
+    @Html.AntiForgeryToken()
+    <input asp-for="Id" hidden />
+
+    <h4>@SharedLocalizer["AreYouSureYouWantToDeleteThisUser"]</h4>
+    <hr />
+    <button type="submit" class="btn btn-danger" style="width:150px">@SharedLocalizer["Delete"]</button>
+    <a asp-controller="UserManagement" asp-action="Index" class="btn btn-secondary" style="width:150px">@SharedLocalizer["Cancel"]</a>
+</form>
+
+<partial name="_ValidationScriptsPartial" />

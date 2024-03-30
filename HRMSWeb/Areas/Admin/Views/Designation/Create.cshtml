@@ -1,0 +1,69 @@
+﻿@model DesignationVM
+<div class="card card-secondary mx-auto">
+    <div class="card-header">
+        <h3 class="card-title">@SharedLocalizer["AddDesignation"]</h3>
+    </div>
+
+        
+    <form method="post" asp-controller="Designation" asp-action="Create">
+        <div class="card-body row">
+            @Html.AntiForgeryToken()
+            <div class="mb-3 form-group col-4">
+                <label asp-for="Name"></label><span class="text-danger text-bold">&nbsp;* &nbsp;<i class="flag-icon flag-icon-us mr-2"></i></span>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+                <div class="mb-3 form-group col-4">
+                    <label asp-for="NameAl"></label><span class="text-danger text-bold">&nbsp;* &nbsp;<i class="flag-icon flag-icon-al mr-2"></i></span>
+                    <input asp-for="NameAl" class="form-control" />
+                    <span asp-validation-for="NameAl" class="text-danger"></span>
+                </div>
+            <div class="mb-3 form-group col-4">
+                <label asp-for="DepartmentId">@SharedLocalizer["Department"]</label><span class="text-danger text-bold">&nbsp;*</span>
+                <select asp-for="DepartmentId" id="select2" class="form-control select2bs4 select2-hidden-accessible"
+                        style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+        </div>
+            <div class="modal-footer justify-content-between">
+                <a class="btn btn-secondary" asp-area="Admin" asp-controller="Designation" asp-action="Index">@SharedLocalizer["BackToList"]</a>
+                <button type="submit" class="btn bg-olive">@SharedLocalizer["Add"]</button>
+            </div>
+        </form>
+  
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#select2').select2({
+                ajax: {
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                        };
+                    },
+
+                    url: '@Url.Action("GetDepartment","Department")',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.key,
+                                }
+                            })
+                        };
+                    }
+                },
+                placeholder: '--Select Department--',
+                //minimumInputLength: 1
+            });
+        });
+
+    </script>
+
+}
+
+

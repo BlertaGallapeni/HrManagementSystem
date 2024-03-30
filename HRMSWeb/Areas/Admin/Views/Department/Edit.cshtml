@@ -1,0 +1,33 @@
+﻿@model DepartmentVM
+
+
+<div class="card card-secondary mx-auto">
+
+        <div class="card-header">
+            <h3 class="card-title">@SharedLocalizer["EditDepartment"]</h3>
+        </div>
+
+<form method="post" asp-controller="Department" asp-action="Edit">
+        <input asp-for="EncryptedId" hidden />
+        <div asp-validation-summary="All"></div>
+   <div class="card-body row">
+        <div class="mb-3 col-6">
+                <label asp-for="Name"></label><span class="text-danger text-bold">&nbsp;* &nbsp;<i class="flag-icon flag-icon-us mr-2"></i></span>
+            <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+            <div class="mb-3 col-6">
+                <label asp-for="NameAl"></label><span class="text-danger text-bold">&nbsp;*&nbsp;<i class="flag-icon flag-icon-al mr-2"></i></span>
+                <input asp-for="NameAl" class="form-control" />
+                <span asp-validation-for="NameAl" class="text-danger"></span>
+            </div>
+        
+        </div>
+
+        <div class="modal-footer justify-content-between">
+            <a asp-controller="Department" asp-action="Index" class="btn btn-secondary" style="width:150px">@SharedLocalizer["BackToList"]</a>
+            <button type="submit" class="btn bg-olive" style="width:150px">@SharedLocalizer["Update"]</button>
+        </div>
+    </form>
+</div>
+<partial name="_ValidationScriptsPartial" />
